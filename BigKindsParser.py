@@ -1,5 +1,12 @@
 
 import pandas as pd #반드시 import 해야 함
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import warnings
+warnings.filterwarnings("ignore")
+
+plt.rcParams["font.family"] = "Hancom MalangMalang"
+plt.rcParams['figure.figsize'] = 10,10
 
 def press_counter(text_df): #언론사 별 보도 빈도 
     freq = text_df['언론사'].value_counts() 
@@ -40,3 +47,19 @@ def counter_to_DataFrame(key_words): #counter dict --> dataframe
     word_df = word_df.sort_values(['빈도'],ascending = False).reset_index(drop = True) #내림차순 정렬
     return word_df
 
+def press_keywords_wordcloud(df, press): #pipeline set
+    df_keywords = df[df['언론사'].str.contains(press)]['키워드']
+    keywords = keywords_list(df_keywords)
+    news_key = keyword_parser(keywords)
+    news_key = duplication_remover(news_key)
+    key = word_counter(news_key)
+    news_key = counter_to_DataFrame(key)
+    wc = WordCloud(font_path = 'C:/Users/cjsso/AppData/Local/Microsoft/Windows/Fonts/NanumBarunGothic.ttf',
+                    width = 500,
+                    height = 500,
+                    background_color='white').generate_from_frequencies(news_key.set_index('단어').to_dict()["빈도"])
+
+    plt.imshow(wc)
+    plt.axis('off')
+    plt.show()
+    
