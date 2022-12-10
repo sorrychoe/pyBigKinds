@@ -2,10 +2,7 @@
 import pandas as pd #반드시 import 해야 함
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-import warnings
-warnings.filterwarnings("ignore")
 
-plt.rcParams["font.family"] = "Hancom MalangMalang"
 plt.rcParams['figure.figsize'] = 10,10
 
 def press_counter(text_df): #언론사 별 보도 빈도 
