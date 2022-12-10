@@ -48,18 +48,18 @@ def counter_to_DataFrame(key_words): #counter dict --> dataframe
     return word_df
 
 def press_keywords_wordcloud(df, press): #pipeline set
-    df_keywords = df[df['언론사'].str.contains(press)]['키워드']
+    df_keywords = df[df['언론사'].str.contains(press)]['키워드'] #언론사 별 키워드를바로 워드클라우드로 전환
     keywords = keywords_list(df_keywords)
     news_key = keyword_parser(keywords)
     news_key = duplication_remover(news_key)
     key = word_counter(news_key)
     news_key = counter_to_DataFrame(key)
-    wc = WordCloud(font_path = 'C:/Users/cjsso/AppData/Local/Microsoft/Windows/Fonts/NanumBarunGothic.ttf',
+    wc = WordCloud(font_path = '/Fonts/NanumBarunGothic.ttf', #본인이 선호하는 폰트 설정
                     width = 500,
                     height = 500,
                     background_color='white').generate_from_frequencies(news_key.set_index('단어').to_dict()["빈도"])
 
     plt.imshow(wc)
     plt.axis('off')
-    plt.show()
+    plt.show() # 워드클라우드 출력
     
