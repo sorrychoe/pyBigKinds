@@ -51,7 +51,7 @@ def press_keywords_wordcloud(df, press): #pipeline set
     news_key = duplication_remover(news_key)
     key = word_counter(news_key)
     news_key = counter_to_DataFrame(key)
-    wc = WordCloud(font_path = '/Fonts/NanumBarunGothic.ttf', #본인이 선호하는 폰트 설정
+    wc = WordCloud(font_path = './NanumBarunGothic.ttf', #본인이 선호하는 폰트 설정
                     width = 500,
                     height = 500,
                     background_color='white').generate_from_frequencies(news_key.set_index('단어').to_dict()["빈도"])
