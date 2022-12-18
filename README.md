@@ -1,6 +1,7 @@
 # BigKindsParser
 
 BigKinds 데이터 전처리 자동화를 위한 모듈입니다. 
+
 ver 1.4
 </br>
 </hr>
