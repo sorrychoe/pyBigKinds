@@ -1,18 +1,18 @@
-
-import pandas as pd #반드시 import 해야 함
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
+#반드시 import 해야 함
+# import pandas as pd 
+# import matplotlib.pyplot as plt
+# from wordcloud import WordCloud
 
 plt.rcParams['figure.figsize'] = 10,10
 
-def press_counter(text_df): #언론사 별 보도 빈도 
-    freq = text_df['언론사'].value_counts() 
+def press_counter(f): #언론사 별 보도 빈도 
+    freq = df['언론사'].value_counts() 
     brod_df = pd.DataFrame(freq).reset_index() 
     brod_df.rename(columns = {'index':'언론사', '언론사':'기사'}, inplace = True) 
     return brod_df
 
-def keywords_list(series): #키워드를 list로 변환
-    return series.values.tolist()
+def keywords_list(df): #키워드를 list로 변환
+    return df['키워드'].values.tolist()
 
 def keyword_parser(text_list): #키워드 파싱
     news_key = []
