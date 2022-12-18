@@ -7,11 +7,11 @@ ver 1.4
 
 하단의 라이브러리는 반드시 설치하여야 합니다.
 
-'''
+```
 import pandas as pd 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-'''
+```
 
 </br>
 </hr>
