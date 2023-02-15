@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: bigkindsparser
+Version: 0.1.4
+Summary: 본 패키지는 bigkinds에서 추출한 데이터셋을 간편하게 분석할 수 있도록 하는 패키지이다.
+Author: sorrychoe
+Author-email: cjssoote@gmail.com
+License: MIT
+Requires-Python: >=3.7

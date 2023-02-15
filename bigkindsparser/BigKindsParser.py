@@ -1,10 +1,3 @@
-#반드시 import 해야 함
-# import pandas as pd 
-# import matplotlib.pyplot as plt
-# from wordcloud import WordCloud
-
-plt.rcParams['figure.figsize'] = 10,10
-
 def press_counter(f): #언론사 별 보도 빈도 
     freq = df['언론사'].value_counts() 
     brod_df = pd.DataFrame(freq).reset_index() 

@@ -2,20 +2,9 @@
 
 BigKinds 데이터 전처리 자동화를 위한 모듈입니다. 
 
-ver 1.4
+현재 지속적으록 개발 시도 중에 있으며, 향후 추가되어 완성되는 영역이 있으면 지속적으로 업로드할 계획입니다.
 
-</br>
-</hr>
-
-## 필수 설치 라이브러리
-
-하단의 라이브러리는 반드시 설치하여야 합니다.
-
-```
-import pandas as pd 
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-```
+ver 0.1.4
 
 </br>
 </hr>
