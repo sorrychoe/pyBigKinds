@@ -1,0 +1,8 @@
+{
+    "rules": {
+        "function-comma-space-after": "always",
+        "declaration-colon-space-before": "never",
+        "function-calc-no-unspaced-operator": true
+    }
+}
+
