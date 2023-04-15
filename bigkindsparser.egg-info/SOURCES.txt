@@ -1,9 +1,0 @@
-README.md
-setup.py
-bigkindsparser/BigKindsParser.py
-bigkindsparser/__init__.py
-bigkindsparser.egg-info/PKG-INFO
-bigkindsparser.egg-info/SOURCES.txt
-bigkindsparser.egg-info/dependency_links.txt
-bigkindsparser.egg-info/requires.txt
-bigkindsparser.egg-info/top_level.txt

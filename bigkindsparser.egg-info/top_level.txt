@@ -1,4 +1,0 @@
-bigkindsparser
-matplotlib
-pandas
-wordcloud
