@@ -15,4 +15,4 @@ wordcloud = "1.8.2.2"
 
 [tool.black]
 line-length = 110
-target-version = ['py38']
+target-version = ['py39']
