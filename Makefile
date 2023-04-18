@@ -1,4 +1,4 @@
-.PHONY: init install uninstall wheel format lint test clean
+.PHONY: init install uninstall wheel format lint clean
 
 NAME = BigkindsParser
 
