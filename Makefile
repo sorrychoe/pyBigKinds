@@ -48,7 +48,6 @@ format:
 
 lint:
 	$(python) -m flake8 --config=.flake8 BigKindsParser/ setup.py
-	$(python) -m mypy --config-file=.mypy.ini BigkindsParser/ setup.py
 	$(python) -W ignore::DeprecationWarning -m pylint --rcfile=.pylintrc BigkindsParser/ setup.py
 
 clean:

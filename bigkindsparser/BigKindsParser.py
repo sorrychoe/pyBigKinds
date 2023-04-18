@@ -1,11 +1,9 @@
-from typing import Any, Dict, List
-
 import matplotlib as plt
 import pandas as pd
 import wordcloud
 
 
-def press_counter(df: Any) -> Any:
+def press_counter(df):
     """
     언론사 별 보도 빈도
     """
@@ -15,7 +13,7 @@ def press_counter(df: Any) -> Any:
     return brod_df
 
 
-def keywords_list(df: Any) -> List[str]:
+def keywords_list(df):
     """
     키워드를 list로 변환
     """
@@ -23,33 +21,33 @@ def keywords_list(df: Any) -> List[str]:
     return df["키워드"].values.tolist()
 
 
-def keyword_parser(text_list: List[str]) -> List[str]:
+def keyword_parser(text_list):
     """
     키워드 파싱
     """
-    news_key: List[str] = []
+    news_key = []
     for word in text_list:
         word = word.split(",")  # ',' 기점으로 스트링 분리
         news_key.append(word)  # 분리된 단어들을 리스트에 새로 정렬
     return news_key
 
 
-def duplication_remover(news_key: List[str]) -> List[str]:
+def duplication_remover(news_key):
     """
     중복 값 제거
     """
-    news_value: List[str] = []
+    news_value = []
     for j in news_key:
         j = list(set(j))  # 중복 제거
         news_value.append(j)  # 제거된 리스트를 새로운 리스트에 삽입
     return news_value
 
 
-def word_counter(news_value: List[str]) -> Dict[str, str]:
+def word_counter(news_value):
     """
     단어 갯수 카운트
     """
-    key_words: Dict = {}
+    key_words = {}
     for k in range(len(news_value)):
         for i in news_value[k]:
             if i not in key_words:
@@ -59,7 +57,7 @@ def word_counter(news_value: List[str]) -> Dict[str, str]:
     return key_words
 
 
-def counter_to_DataFrame(key_words: Dict) -> Any:
+def counter_to_DataFrame(key_words):
     """
     counter dict --> dataframe
     """
@@ -69,7 +67,7 @@ def counter_to_DataFrame(key_words: Dict) -> Any:
     return word_df
 
 
-def press_keywords_wordcloud(df: Any, press: str) -> None:
+def press_keywords_wordcloud(df, press):
     """
     make keyword wordcloud
     """

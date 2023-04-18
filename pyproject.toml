@@ -6,7 +6,7 @@ authors = ["cjssoote@gmail.com"]
 [tool.poetry.dependencies]
 black = ">=19.3b0,<=22.12"
 isor = ">=5.7"
-mypy = ">=0.910"
+ruamel.yaml = ">=0.15"
 pre-commit = ">=2.13"
 pylint = ">=2.9"
 Pandas = ">= 1.5.1"

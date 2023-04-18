@@ -10,6 +10,8 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
         args: ["--maxkb=2048"]
+      - id: check-case-conflict
+      - id: check-merge-conflict
       - id: requirements-txt-fixer
   - repo: local
     hooks:
@@ -37,11 +39,3 @@ repos:
         entry: flake8
         args:
           - --config=.flake8
-      # - id: lint-mypy
-      #   name: Lint with mypy
-      #   language: system
-      #   types: [file, python, text]
-      #   pass_filenames: true
-      #   entry: mypy
-      #   args:
-      #     - --config-file=.mypy.ini
