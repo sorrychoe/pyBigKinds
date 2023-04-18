@@ -1,9 +1,9 @@
 black>=19.3b0,<=22.12
+flake8>=3.9
 isort>=5.7
+matplotlib >= 3.5.3
 mypy>=0.910
+Pandas >= 1.5.1
 pre-commit>=2.13
 pylint>=2.9
-Pandas >= 1.5.1
-matplotlib >= 3.5.3
 wordcloud == 1.8.2.2
-
