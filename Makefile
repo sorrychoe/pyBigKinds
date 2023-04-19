@@ -54,4 +54,4 @@ clean:
 	shopt -s globstar ; \
 	rm -fr BigKindsParser.egg-info/ ; \
 	rm -fr build/ dist/ ; \
-	rm -fr **/.mypy_cache **/__pycache__ ;
+	rm -fr **/__pycache__ ;
