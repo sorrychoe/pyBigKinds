@@ -1,16 +1,8 @@
-.PHONY: init install uninstall wheel format lint clean
+.PHONY: init install uninstall wheel format lint clear
 
 NAME = BigkindsParser
 
 SHELL := bash
-python = python3
-ifeq ($(OS),Windows_NT)
-	python := python
-endif
-
-ifdef user
-	pip_user_option = --user
-endif
 
 init_environment = $(python) -m pip install $(pip_user_option) --upgrade pip && \
 $(python) -m pip install $(pip_user_option) --upgrade 'build>=0.7' 'setuptools>=61.0,<64.0' 'wheel>=0.37' && \
@@ -50,7 +42,7 @@ lint:
 	$(python) -m flake8 --config=.flake8 BigKindsParser/ setup.py
 	$(python) -W ignore::DeprecationWarning -m pylint --rcfile=.pylintrc BigkindsParser/ setup.py
 
-clean:
+clear:
 	shopt -s globstar ; \
 	rm -fr BigKindsParser.egg-info/ ; \
 	rm -fr build/ dist/ ; \
