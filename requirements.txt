@@ -5,5 +5,4 @@ matplotlib >= 3.5.3
 Pandas >= 1.5.1
 pre-commit>=2.13
 pylint>=2.9
-ruamel.yaml>=0.15
 wordcloud == 1.8.2.2

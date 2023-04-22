@@ -3,11 +3,10 @@ import pandas as pd
 import wordcloud
 
 
-class BigKinds():
-    def __init__(self, data_path = None):
-        self.data = pd.read_excel(data_path)   
-        self.texts = self.data["키워드"].values.tolist()  
-        
+class BigKinds:
+    def __init__(self, data_path=None):
+        self.data = pd.read_excel(data_path)
+        self.texts = self.data["키워드"].values.tolist()
 
     def press_counter(self, data):
         """
@@ -16,14 +15,13 @@ class BigKinds():
         freq = data["언론사"].value_counts()
         brod_df = pd.DataFrame(freq).reset_index()
         brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
-        
-        plt.bar(data = brod_df, x = '기사', y = '언론사')
 
-        plt.figure(facecolor = 'white')
-        plt.show()  
+        plt.bar(data=brod_df, x="기사", y="언론사")
 
+        plt.figure(facecolor="white")
+        plt.show()
 
-    def keyword_counter(self,texts):
+    def keyword_counter(self, texts):
         """
         키워드 절대 빈도
         """
@@ -42,7 +40,6 @@ class BigKinds():
         word_df.columns = ["단어", "빈도"]
         word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
         return word_df
-
 
     def keyword_counter_no_duplicated(texts):
         """
@@ -73,7 +70,7 @@ class BigKinds():
         make keyword wordcloud
         """
         words = self.keyword_counter_no_duplicated(texts)
-        
+
         wc = wordcloud.WordCloud(
             font_path="font/NanumGothic.ttf", width=500, height=500, background_color="white"
         ).generate_from_frequencies(words.set_index("단어").to_dict()["빈도"])
