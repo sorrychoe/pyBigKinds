@@ -1,4 +1,4 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 import wordcloud
 
@@ -8,25 +8,25 @@ class BigKinds:
         self.data = pd.read_excel(data_path)
         self.texts = self.data["키워드"].values.tolist()
 
-    def press_counter(self, data):
+    def press_counter(self):
         """
         언론사 별 보도 빈도
         """
-        freq = data["언론사"].value_counts()
+        freq = self.data["언론사"].value_counts()
         brod_df = pd.DataFrame(freq).reset_index()
         brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
 
-        plt.bar(data=brod_df, x="기사", y="언론사")
+        plt.bar(brod_df["기사"], brod_df["언론사"])
 
         plt.figure(facecolor="white")
         plt.show()
 
-    def keyword_counter(self, texts):
+    def keyword_counter(self):
         """
         키워드 절대 빈도
         """
         news_key = []
-        for word in texts:
+        for word in self.texts:
             word = word.split(",")  # ',' 기점으로 스트링 분리
             news_key.append(word)  # 분리된 단어들을 리스트에 새로 정렬
         key_words = {}
@@ -41,12 +41,12 @@ class BigKinds:
         word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
         return word_df
 
-    def keyword_counter_no_duplicated(texts):
+    def keyword_counter_no_duplicated(self):
         """
         기사 별 중복 값 제거한 절대 빈도 반환
         """
         news_key = []
-        for word in texts:
+        for word in self.texts:
             word = word.split(",")  # ',' 기점으로 스트링 분리
             news_key.append(word)  # 분리된 단어들을 리스트에 새로 정렬
         news_value = []
@@ -65,11 +65,11 @@ class BigKinds:
         word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
         return word_df
 
-    def press_keywords_wordcloud(self, texts):
+    def press_keywords_wordcloud(self):
         """
         make keyword wordcloud
         """
-        words = self.keyword_counter_no_duplicated(texts)
+        words = self.keyword_counter_no_duplicated(self.texts)
 
         wc = wordcloud.WordCloud(
             font_path="font/NanumGothic.ttf", width=500, height=500, background_color="white"
