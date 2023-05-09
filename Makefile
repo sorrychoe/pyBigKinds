@@ -13,8 +13,7 @@ build_wheel = python3 setup.py bdist_wheel
 uninstall_extension = pip uninstall --yes $(NAME)
 
 ifndef production
-	init_environment += git-lfs install && \
-	pre-commit install
+	init_environment += pre-commit install
 
 	install_extension = pip install $(pip_user_option) -e .
 else
