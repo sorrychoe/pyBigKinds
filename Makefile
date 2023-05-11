@@ -34,12 +34,12 @@ wheel:
 	$(build_wheel)
 
 format:
-	@black --config=pyproject.toml BigKindsParser/ setup.py
-	@isort --settings-file=.isort.cfg BigKindsParser/ setup.py
+	@black --config=pyproject.toml BigKindsParser/
+	@isort --settings-file=.isort.cfg BigKindsParser/
 
 lint:
-	@flake8 --config=.flake8 BigKindsParser/ setup.py
-	@pylint --rcfile=.pylintrc BigkindsParser/ setup.py
+	@flake8 --config=.flake8 BigKindsParser/
+	@pylint --rcfile=.pylintrc BigkindsParser/
 
 clear:
 	shopt -s globstar ; \
