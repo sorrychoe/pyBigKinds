@@ -72,7 +72,8 @@ disable=raw-checker-failed,
         use-symbolic-message-instead,
         missing-module-docstring,
         duplicate-code,
-        C0114, W1116, W0511
+        consider-using-enumerate,
+        C0114, C0103, W1116, W0511
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -520,4 +521,3 @@ min-public-methods=2
 # "BaseException, Exception".
 overgeneral-exceptions=BaseException,
                        Exception
-

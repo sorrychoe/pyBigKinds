@@ -21,7 +21,7 @@ repos:
     rev: v3.9.0
     hooks:
       - id: reorder-python-imports
-        args: [--py310-plus, coinpan_crawler.py]
+        args: [--py310-plus, bigkindsparser/BigKindsParser.py]
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.4.0
     hooks:
