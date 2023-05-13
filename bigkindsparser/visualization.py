@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import wordcloud
-from preprocessing import (
+from .preprocessing import (
     counter_to_DataFrame,
     duplication_remover,
     keyword_parser,
