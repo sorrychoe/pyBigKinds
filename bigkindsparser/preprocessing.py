@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 import pandas as pd
-import wordcloud
 
 
 def press_counter(df):
@@ -9,6 +7,17 @@ def press_counter(df):
     brod_df = pd.DataFrame(freq).reset_index()
     brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
     return brod_df
+
+
+def header_remover(df):
+    """[]로 표시된 헤더 삭제"""
+    ans = df["제목"].str.replace("\[[^)]*\]", "")
+    return ans
+
+
+def day_range(df):
+    """날짜 범위 파악"""
+    print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
 
 
 def keywords_list(df):
@@ -52,23 +61,3 @@ def counter_to_DataFrame(key_words):
     word_df.columns = ["단어", "빈도"]
     word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
     return word_df
-
-
-def press_keywords_wordcloud(df, press):
-    """pipeline set"""
-    df_keywords = df[df["언론사"].str.contains(press)]["키워드"]
-    keywords = keywords_list(df_keywords)
-    news_key = keyword_parser(keywords)
-    news_key = duplication_remover(news_key)
-    key = word_counter(news_key)
-    news_key = counter_to_DataFrame(key)
-    wc = wordcloud.WordCloud(
-        font_path="./NanumBarunGothic.ttf",
-        width=500,
-        height=500,
-        background_color="white",
-    ).generate_from_frequencies(news_key.set_index("단어").to_dict()["빈도"])
-
-    plt.imshow(wc)
-    plt.axis("off")
-    plt.show()
