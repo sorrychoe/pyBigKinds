@@ -9,6 +9,17 @@ def press_counter(df):
     return brod_df
 
 
+def header_remover(df):
+    """[]로 표시된 헤더 삭제"""
+    ans = df["제목"].str.replace("\[[^)]*\]", "")
+    return ans
+
+
+def day_range(df):
+    """날짜 범위 파악"""
+    print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
+
+
 def keywords_list(df):
     """키워드를 list로 변환"""
     return df["키워드"].values.tolist()
