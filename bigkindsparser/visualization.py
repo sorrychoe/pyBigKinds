@@ -1,16 +1,16 @@
 import platform
 
-import wordcloud
-import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-from .preprocessing import (
-    keywords_list,
-    keyword_parser,
-    duplication_remover,
-    word_counter,
-    counter_to_DataFrame,
-)
+import matplotlib.pyplot as plt
+import wordcloud
 
+from .preprocessing import (
+    counter_to_DataFrame,
+    duplication_remover,
+    keyword_parser,
+    keywords_list,
+    word_counter,
+)
 
 if platform.system() == "Window":
     font_name = fm.FontProperties(fname="C:/Windows/Fonts/NanumBarunGothic.ttf").get_name()

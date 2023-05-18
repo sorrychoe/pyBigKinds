@@ -1,6 +1,6 @@
+from ._version import __version__
 from .preprocessing import *
 from .visualization import *
-from ._version import __version__
 
 __all__ = [
     "press_counter",
