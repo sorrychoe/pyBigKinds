@@ -5,9 +5,6 @@
 ## Requirements
 
 - Python >= 3.8
-- matplotlib
-- Pandas
-- WordCloud
 
 ## How to Install?
 
