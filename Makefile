@@ -33,12 +33,12 @@ wheel:
 	$(python) setup.py bdist_wheel
 
 format:
-	$(python) -m black --config=pyproject.toml BigKindsParser/ test/
-	$(python) -m isort --settings-file=pyproject.toml BigKindsParser/ test/
+	$(python) -m black --config=pyproject.toml BigKindsParser/
+	$(python) -m isort --settings-file=pyproject.toml BigKindsParser/
 
 lint:
-	$(python) -m flake8 --config=.flake8 BigKindsParser/ test/
-	$(python) -m pylint --rcfile=.pylintrc BigKindsParser/ test/
+	$(python) -m flake8 --config=.flake8 BigKindsParser/
+	$(python) -m pylint --rcfile=.pylintrc BigKindsParser/
 
 clear:
 	rm -fr **/BigKindsParser.egg-info/ ; \
