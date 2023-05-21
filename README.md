@@ -6,7 +6,7 @@
 
 - Python >= 3.8
 
-## How to Install?
+## Installation
 
 - macOS
 
