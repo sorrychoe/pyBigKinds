@@ -9,7 +9,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="BigKindsParser",
-    version="0.0.4",
+    version="0.1.0",
     packages=find_packages("BigKindsParser"),
     package_dir={"": "bigkindsparser"},
     python_requires=">=3.8",
