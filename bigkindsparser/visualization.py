@@ -1,6 +1,5 @@
 import platform
 
-import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 import wordcloud
 
@@ -12,9 +11,8 @@ from .preprocessing import (
     word_counter,
 )
 
-if platform.system() == "Window":
-    font_name = fm.FontProperties(fname="C:/Windows/Fonts/NanumBarunGothic.ttf").get_name()
-    plt.rcParams["font.family"] = font_name
+if platform.system() == "Windows":
+    plt.rcParams["font.family"] = "Malgun Gothic"
 
 elif platform.system() == "Darwin":
     plt.rcParams["font.family"] = "AppleGothic"

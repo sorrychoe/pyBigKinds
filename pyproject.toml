@@ -8,9 +8,9 @@ black = ">=19.3b0,<=22.12"
 isort = ">=5.7"
 pre-commit = ">=2.13"
 pylint = ">=2.9"
-Pandas = ">= 1.5.1"
+Pandas = "1.5.2"
 matplotlib = ">= 3.5.3"
-wordcloud = "1.8.2.2"
+wordcloud = ">=1.8.2.2"
 
 [tool.black]
 line-length = 110
