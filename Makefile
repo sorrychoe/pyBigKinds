@@ -18,9 +18,9 @@ else
 endif
 
 init:
-	pip install $(pip_user_option) --upgrade pip && \
-	pip install $(pip_user_option) --upgrade 'build>=0.7' 'setuptools>=61.0,<64.0' 'wheel>=0.37' && \
-	pip install $(pip_user_option) -r requirements.txt \
+	$(python) -m pip install $(pip_user_option) --upgrade pip && \
+	$(python) -m pip install $(pip_user_option) --upgrade 'build>=0.7' 'setuptools>=61.0,<64.0' 'wheel>=0.37' && \
+	$(python) -m pip install $(pip_user_option) -r requirements.txt \
 	pre-commit install
 
 install:

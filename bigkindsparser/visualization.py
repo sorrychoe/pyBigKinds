@@ -13,13 +13,14 @@ from .preprocessing import (
 
 if platform.system() == "Windows":
     plt.rcParams["font.family"] = "Malgun Gothic"
+    font_path = 'malgun'
 
 elif platform.system() == "Darwin":
     plt.rcParams["font.family"] = "AppleGothic"
+    font_path = 'AppleGothic'
 
 else:
     print("Linux는 아직 지원하지 않습니다.")
-
 
 plt.rcParams["axes.unicode_minus"] = False
 
@@ -33,7 +34,7 @@ def keywords_wordcloud(df, press):
     key = word_counter(news_key)
     news_key = counter_to_DataFrame(key)
     wc = wordcloud.WordCloud(
-        font_path="./NanumBarunGothic.ttf",
+        font_path=font_path,
         width=500,
         height=500,
         background_color="white",
