@@ -1,4 +1,4 @@
-.PHONY: init install uninstall wheel format lint clear
+.PHONY: init install uninstall wheel format clear
 
 NAME = BigKindsParser
 
@@ -33,11 +33,8 @@ wheel:
 	$(python) setup.py bdist_wheel
 
 format:
-	$(python) -m black --config=pyproject.toml BigKindsParser/
-	$(python) -m isort --settings-file=pyproject.toml BigKindsParser/
-
-lint:
-	$(python) -m flake8 --config=.flake8 BigKindsParser/
+	$(python) -m isort --settings-file=setup.cfg BigKindsParser/
+	$(python) -m flake8 --config=setup.cfg BigKindsParser/
 	$(python) -m pylint --rcfile=.pylintrc BigKindsParser/
 
 clear:
