@@ -9,14 +9,13 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="BigKindsParser",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages("BigKindsParser"),
-    package_dir={"": "bigkindsparser"},
     python_requires=">=3.8",
     author="sorrychoe",
     author_email="cjssoote@gmail.com",
     description=("Exploratory data analysis Toolkit of Python for BigKinds Data"),
-    keywords=["Journalism", "BigKinds"],
+    keywords=["Journalism", "preprocessing-data"],
     url="https://github.com/sorrychoe/BigKindsParser",
     license="MIT",
     install_requires=[
