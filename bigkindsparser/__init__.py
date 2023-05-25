@@ -1,5 +1,14 @@
+"""
+BigKindsParser: Exploratory data analysis Toolkit of Python for BigKinds Data
+"""
+
+from . import _version
 from ._version import __version__
+
+from . import preprocessing
 from .preprocessing import *
+
+from . import visualization
 from .visualization import *
 
 __all__ = [
