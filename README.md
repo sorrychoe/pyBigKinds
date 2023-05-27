@@ -29,3 +29,7 @@
 ## License
 
 - [MIT](https://choosealicense.com/licenses/mit/)
+
+## you have some issue?
+
+사용 중 문제 발생 시, 해당 Repo issue에 등록해주세요.
