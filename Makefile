@@ -1,4 +1,4 @@
-.PHONY: init install uninstall wheel format clear
+.PHONY: init install uninstall wheel release format clear
 
 NAME = BigKindsParser
 
