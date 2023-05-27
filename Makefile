@@ -42,6 +42,6 @@ format:
 	$(python) -m pylint --rcfile=.pylintrc BigKindsParser/
 
 clear:
-	rm -fr **/BigKindsParser.egg-info/ ; \
-	rm -fr build/ dist/ ; \
-	rm -fr **/__pycache__ ;
+	rm -fr BigKindsParser.egg-info/
+	rm -fr build/ dist/
+	rm -fr **/__pycache__
