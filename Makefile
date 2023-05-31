@@ -37,11 +37,11 @@ release:
 	$(python) -m twine upload dist/*
 
 format:
-	$(python) -m isort --settings-file=setup.cfg BigKindsParser/
-	$(python) -m flake8 --config=setup.cfg BigKindsParser/
-	$(python) -m pylint --rcfile=.pylintrc BigKindsParser/
+	$(python) -m isort --settings-file=setup.cfg pyBigKinds/
+	$(python) -m flake8 --config=setup.cfg pyBigKinds/
+	$(python) -m pylint --rcfile=.pylintrc pyBigKinds/
 
 clear:
-	rm -fr BigKindsParser.egg-info/
+	rm -fr pyBigKinds.egg-info/
 	rm -fr build/ dist/
 	rm -fr **/__pycache__

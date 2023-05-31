@@ -11,7 +11,7 @@ from .preprocessing import (
     word_counter,
 )
 
-if platform.system() == "Windows":
+if platform.system() in ["Windows", "linux"]:
     plt.rcParams["font.family"] = "Malgun Gothic"
     font_path = 'malgun'
 
@@ -20,7 +20,7 @@ elif platform.system() == "Darwin":
     font_path = 'AppleGothic'
 
 else:
-    print("Linux는 아직 지원하지 않습니다.")
+    print("미지원 os입니다.")
 
 plt.rcParams["axes.unicode_minus"] = False
 
