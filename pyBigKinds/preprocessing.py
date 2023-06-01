@@ -119,3 +119,8 @@ def lsa(df):
     svd_df = pd.DataFrame(data=svd, columns = ['component 0', 'component 1'])
 
     return svd_df
+
+
+"""
+Normalize --> TO BE CONTINUE
+"""
