@@ -1,4 +1,21 @@
 import pandas as pd
+from sklearn.decomposition import NMF, PCA, TruncatedSVD
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
+from sklearn.manifold import TSNE
+from sklearn.pipeline import Pipeline
+
+from .base import (
+    counter_to_dataframe,
+    duplication_remover,
+    keyword_list,
+    keyword_parser,
+    word_counter,
+)
+
+
+def day_range(df):
+    """날짜 범위 파악"""
+    print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
 
 
 def press_counter(df):
@@ -9,55 +26,96 @@ def press_counter(df):
     return brod_df
 
 
-def header_remover(df):
-    """[]로 표시된 헤더 삭제"""
-    ans = df["제목"].str.replace("\[[^)]*\]", "")
-    return ans
+def keyword_dataframe(df):
+    """키워드 단어 빈도"""
+    lis = keyword_list(df)
+    keywords = keyword_parser(lis)
+    counter = word_counter(keywords)
+    df = counter_to_dataframe(counter)
+    return df
 
 
-def day_range(df):
-    """날짜 범위 파악"""
-    print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
+def keyword_dataframe_no_duplicated(df):
+    """키워드 중복 제거 단어 빈도"""
+    lis = keyword_list(df)
+    keywords = keyword_parser(lis)
+    keywords_set = duplication_remover(keywords)
+    counter = word_counter(keywords_set)
+    df = counter_to_dataframe(counter)
+    return df
 
 
-def keywords_list(df):
-    """키워드를 list로 변환"""
-    return df["키워드"].values.tolist()
+def tfidf(df):
+    """키워드 상대 빈도"""
+    lis = keyword_list(df)
+
+    tfidfv = TfidfVectorizer()
+    tdm = tfidfv.fit_transform(lis)
+
+    word_count = pd.DataFrame({
+        '단어': tfidfv.get_feature_names_out(),
+        '빈도': tdm.sum(axis=0).flat,
+    }).sort_values('빈도', ascending = False).reset_index(drop = True)
+    return word_count
 
 
-def keyword_parser(text_list):
-    """키워드 파싱"""
-    news_key = []
-    for word in text_list:
-        word = word.split(",")
-        news_key.append(word)
-    return news_key
+def pca(df, Random_State):
+    """PCA"""
+    lis = keyword_list(df)
+    pipeline = Pipeline([
+        ('vect', CountVectorizer()),
+        ('tfidf', TfidfTransformer()),
+    ])
+    vec = pipeline.fit_transform(lis).toarray()
+
+    pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(vec)
+    pca_df = pd.DataFrame(pca_df, columns = ['component 0', 'component 1'])
+
+    return pca_df
 
 
-def duplication_remover(news_key):
-    """중복 값 제거"""
-    news_value = []
-    for j in news_key:
-        j = list(set(j))
-        news_value.append(j)
-    return news_value
+def nmf(df, Random_State):
+    """NMF"""
+    lis = keyword_list(df)
+    pipeline = Pipeline([
+        ('vect', CountVectorizer()),
+        ('tfidf', TfidfTransformer()),
+    ])
+    vec = pipeline.fit_transform(lis).toarray()
+
+    nmf_df = NMF(n_components=2, random_state=Random_State, init="random").fit_transform(vec)
+    nmf_df = pd.DataFrame(nmf_df, columns = ['component 0', 'component 1'])
+
+    return nmf_df
 
 
-def word_counter(news_value):
-    """단어 갯수 카운트"""
-    key_words = {}
-    for k in range(len(news_value)):
-        for i in news_value[k]:
-            if i not in key_words:
-                key_words[i] = 1
-            elif i in key_words:
-                key_words[i] += 1
-    return key_words
+def t_sne(df, Learn_Rate):
+    """t-sne"""
+    lis = keyword_list(df)
+
+    pipeline = Pipeline([
+        ('vect', CountVectorizer()),
+        ('tfidf', TfidfTransformer()),
+    ])
+    vec = pipeline.fit_transform(lis).toarray()
+
+    tsne = TSNE(n_components=2, learning_rate=Learn_Rate).fit_transform(vec)
+    tsne_df = pd.DataFrame(tsne, columns = ['component 0', 'component 1'])
+
+    return tsne_df
 
 
-def counter_to_DataFrame(key_words):
-    """counter dict --> dataframe"""
-    word_df = pd.DataFrame(key_words.items())
-    word_df.columns = ["단어", "빈도"]
-    word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
-    return word_df
+def lsa(df):
+    """LSA"""
+    lis = keyword_list(df)
+
+    pipeline = Pipeline([
+        ('vect', CountVectorizer()),
+        ('tfidf', TfidfTransformer()),
+    ])
+    vec = pipeline.fit_transform(lis).toarray()
+
+    svd = TruncatedSVD(n_components=2).fit_transform(vec)
+    svd_df = pd.DataFrame(data=svd, columns = ['component 0', 'component 1'])
+
+    return svd_df

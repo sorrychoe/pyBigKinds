@@ -3,11 +3,11 @@ import platform
 import matplotlib.pyplot as plt
 import wordcloud
 
-from .preprocessing import (
-    counter_to_DataFrame,
+from .base import (
+    counter_to_dataframe,
     duplication_remover,
+    keyword_list,
     keyword_parser,
-    keywords_list,
     word_counter,
 )
 
@@ -28,11 +28,11 @@ plt.rcParams["axes.unicode_minus"] = False
 def keywords_wordcloud(df, press):
     """언론사 별 키워드 워드클라우드 생성"""
     df_keywords = df[df["언론사"] == press]
-    keywords = keywords_list(df_keywords)
+    keywords = keyword_list(df_keywords)
     news_key = keyword_parser(keywords)
     news_key = duplication_remover(news_key)
     key = word_counter(news_key)
-    news_key = counter_to_DataFrame(key)
+    news_key = counter_to_dataframe(key)
     wc = wordcloud.WordCloud(
         font_path=font_path,
         width=500,
@@ -48,11 +48,11 @@ def keywords_wordcloud(df, press):
 def top_words(df, press):
     """언론사 별 사용 단어 빈도 상위 25개"""
     df_keywords = df[df["언론사"].str.contains(press)]
-    keywords = keywords_list(df_keywords)
+    keywords = keyword_list(df_keywords)
     news_key = keyword_parser(keywords)
     news_key = duplication_remover(news_key)
     key = word_counter(news_key)
-    news_key = counter_to_DataFrame(key)
+    news_key = counter_to_dataframe(key)
 
     data = news_key.head(25)
     plt.barh(data["단어"], data["빈도"].sort_values(ascending=True))
