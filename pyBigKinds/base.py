@@ -46,5 +46,7 @@ def counter_to_dataframe(key_words):
     """counter dict --> dataframe"""
     word_df = pd.DataFrame(key_words.items())
     word_df.columns = ["단어", "빈도"]
-    word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(drop=True)  # 내림차순 정렬
+    word_df = word_df.sort_values(["빈도"], ascending=False).reset_index(
+        drop=True,
+    )  # 내림차순 정렬
     return word_df
