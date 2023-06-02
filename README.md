@@ -8,19 +8,16 @@
 
 ## Installation
 
-:warning: 버전 업데이트가 진행 중에 있습니다. 업데이트 이후에 pyBigKinds라는 이름으로 선보일 예정이며,
-아직까지는 BigKindsParser로 다운로드가 가능합니다.
-
 - macOS
 
   ```bash
-  python3 -m pip install BigKindsParser
+  python3 -m pip install pyBigKinds
   ```
 
 - Windows, linux
 
   ```bash
-  python -m pip install BigKindsParser
+  python -m pip install pyBigKinds
   ```
 
 

@@ -3,6 +3,7 @@ from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.manifold import TSNE
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import Normalizer
 
 from .base import (
     counter_to_dataframe,
@@ -68,6 +69,12 @@ def tfidf_vector(df):
     ])
     vec = pipeline.fit_transform(lis).toarray()
     return vec
+
+
+def normalize(vec):
+    """normalize vector"""
+    vec_nor = Normalizer().fit_transform(vec)
+    return vec_nor
 
 
 def pca(vec, Random_State):
