@@ -59,14 +59,19 @@ def tfidf(df):
     return word_count
 
 
-def pca(df, Random_State):
-    """PCA"""
+def tfidf_vector(df):
+    """tfidf vector"""
     lis = keyword_list(df)
     pipeline = Pipeline([
         ('vect', CountVectorizer()),
         ('tfidf', TfidfTransformer()),
     ])
     vec = pipeline.fit_transform(lis).toarray()
+    return vec
+
+
+def pca(vec, Random_State):
+    """PCA"""
 
     pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(vec)
     pca_df = pd.DataFrame(pca_df, columns = ['component 0', 'component 1'])
@@ -74,14 +79,8 @@ def pca(df, Random_State):
     return pca_df
 
 
-def nmf(df, Random_State):
+def nmf(vec, Random_State):
     """NMF"""
-    lis = keyword_list(df)
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
 
     nmf_df = NMF(n_components=2, random_state=Random_State, init="random").fit_transform(vec)
     nmf_df = pd.DataFrame(nmf_df, columns = ['component 0', 'component 1'])
@@ -89,15 +88,8 @@ def nmf(df, Random_State):
     return nmf_df
 
 
-def t_sne(df, Learn_Rate):
+def t_sne(vec, Learn_Rate):
     """t-sne"""
-    lis = keyword_list(df)
-
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
 
     tsne = TSNE(n_components=2, learning_rate=Learn_Rate).fit_transform(vec)
     tsne_df = pd.DataFrame(tsne, columns = ['component 0', 'component 1'])
@@ -105,22 +97,10 @@ def t_sne(df, Learn_Rate):
     return tsne_df
 
 
-def lsa(df):
+def lsa(vec):
     """LSA"""
-    lis = keyword_list(df)
-
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
 
     svd = TruncatedSVD(n_components=2).fit_transform(vec)
     svd_df = pd.DataFrame(data=svd, columns = ['component 0', 'component 1'])
 
     return svd_df
-
-
-"""
-Normalize --> TO BE CONTINUE
-"""
