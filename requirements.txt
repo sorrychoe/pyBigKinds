@@ -4,5 +4,6 @@ matplotlib>=3.5.3
 Pandas<2
 pre-commit>=2.13
 pylint>=2.9
+pytest>=7
 scikit-learn>=1.0.0
 wordcloud>=1.8.2.2
