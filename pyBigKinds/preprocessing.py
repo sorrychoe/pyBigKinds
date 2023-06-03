@@ -46,8 +46,10 @@ def keyword_dataframe_no_duplicated(df):
     return df
 
 
-def tfidf(df):
+def tfidf(df, press: str):
     """키워드 상대 빈도"""
+    if press:
+        df = df[press]
     lis = keyword_list(df)
 
     tfidfv = TfidfVectorizer()
@@ -85,7 +87,7 @@ def normalize_vector(vec):
     return vec_nor
 
 
-def pca(vec, Random_State):
+def pca(vec, Random_State=123):
     """PCA"""
 
     pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(
@@ -96,7 +98,7 @@ def pca(vec, Random_State):
     return pca_df
 
 
-def nmf(vec, Random_State):
+def nmf(vec, Random_State=123):
     """NMF"""
 
     nmf_df = NMF(
