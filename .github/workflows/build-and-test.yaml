@@ -2,7 +2,7 @@ name: build-test
 
 on:
   pull_request:
-    branches: [ "develop" ]
+    branches: ["develop", "release"]
 
 permissions:
   contents: read

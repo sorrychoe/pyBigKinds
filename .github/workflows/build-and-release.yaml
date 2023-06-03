@@ -1,8 +1,8 @@
 name: build test & upload pypi
 
 on:
-    push:
-      branches: [ "release" ]
+  push:
+    branches: ["release"]
 
 permissions:
   contents: read
