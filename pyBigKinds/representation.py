@@ -9,7 +9,7 @@ def kmeans(vec, k, random_state=None):
     return kmeans_model.fit_predict(vec)
 
 
-def dbscan(vec, eps, min_samples, metric="euclidian"):
+def dbscan(vec, eps, min_samples, metric="euclidean"):
     """DBSCAN"""
     dbscan_model = DBSCAN(eps=eps, min_samples=min_samples, metric=metric)
     return dbscan_model.fit_predict(vec)

@@ -46,7 +46,7 @@ def keyword_dataframe_no_duplicated(df):
     return df
 
 
-def tfidf(df, press: str):
+def tfidf(df, *press: str):
     """키워드 상대 빈도"""
     if press:
         df = df[press]
