@@ -109,10 +109,10 @@ def nmf(vec, Random_State=123):
     return nmf_df
 
 
-def t_sne(vec, Learn_Rate):
+def t_sne(vec, learn_Rate=100):
     """t-sne"""
 
-    tsne = TSNE(n_components=2, learning_rate=Learn_Rate).fit_transform(vec)
+    tsne = TSNE(n_components=2, learning_rate=learn_Rate).fit_transform(vec)
     tsne_df = pd.DataFrame(tsne, columns=["component 0", "component 1"])
 
     return tsne_df
