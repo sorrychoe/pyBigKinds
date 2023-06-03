@@ -1,3 +1,5 @@
+# pylint: disable=W0612
+
 import platform
 
 import matplotlib.pyplot as plt
@@ -13,11 +15,11 @@ from .base import (
 
 if platform.system() in ["Windows", "linux"]:
     plt.rcParams["font.family"] = "Malgun Gothic"
-    font_path = 'malgun'
+    font_path = "malgun"
 
 elif platform.system() == "Darwin":
     plt.rcParams["font.family"] = "AppleGothic"
-    font_path = 'AppleGothic'
+    font_path = "AppleGothic"
 
 else:
     print("미지원 os입니다.")
@@ -56,4 +58,34 @@ def top_words(df, press):
 
     data = news_key.head(25)
     plt.barh(data["단어"], data["빈도"].sort_values(ascending=True))
+    plt.show()
+
+
+# def ldavis(df, num_topic=5, passes=10, iterations=50):
+#     """ldavis"""
+#     news_words = keyword_list(df)
+#     news_dict = gensim.corpora.Dictionary(news_words)
+#     corpus = [news_dict.doc2bow(text) for text in news_words]
+
+#     ldamodel = gensim.models.ldamodel.LdaModel(
+#         corpus,
+#         num_topics=num_topic,
+#         id2word=news_dict,
+#         passes=passes,
+#         iterations=iterations,
+#     )
+
+#     vis = pyLDAvis.gensim_models.prepare(ldamodel, corpus, news_dict)
+#     pyLDAvis.display(vis)
+
+
+def scatterplot(df):
+    """scatter plot for dimension reduction"""
+    fig, ax = plt.subplots()
+
+    groups = df.groupby("label")
+    for name, points in groups:
+        ax.scatter(points["component 0"], points["component 1"], label=int(name) + 1)
+
+    ax.legend()
     plt.show()
