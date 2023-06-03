@@ -1,4 +1,4 @@
-.PHONY: init install uninstall wheel release format clear
+.PHONY: init install uninstall wheel release format test clear
 
 NAME = BigKindsParser
 
@@ -41,7 +41,10 @@ format:
 	$(python) -m flake8 --config=setup.cfg pyBigKinds/
 	$(python) -m pylint --rcfile=.pylintrc pyBigKinds/
 
+test:
+	$(python) -W ignore::FutureWarning -m pytest -v -s
+
 clear:
-	rm -fr pyBigKinds.egg-info/
-	rm -fr build/ dist/
-	rm -fr **/__pycache__
+	shopt -s globstar ; \
+	rm -fr pyBigKinds.egg-info/ build/ dist/ ;\
+	rm -fr **/__pycache__ **/.pytest_cache ;

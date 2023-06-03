@@ -3,6 +3,7 @@ from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.manifold import TSNE
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import Normalizer
 
 from .base import (
     counter_to_dataframe,
@@ -45,82 +46,82 @@ def keyword_dataframe_no_duplicated(df):
     return df
 
 
-def tfidf(df):
+def tfidf(df, *press: str):
     """키워드 상대 빈도"""
+    if press:
+        df = df[press]
     lis = keyword_list(df)
 
     tfidfv = TfidfVectorizer()
     tdm = tfidfv.fit_transform(lis)
 
-    word_count = pd.DataFrame({
-        '단어': tfidfv.get_feature_names_out(),
-        '빈도': tdm.sum(axis=0).flat,
-    }).sort_values('빈도', ascending = False).reset_index(drop = True)
+    word_count = (
+        pd.DataFrame(
+            {
+                "단어": tfidfv.get_feature_names_out(),
+                "빈도": tdm.sum(axis=0).flat,
+            },
+        )
+        .sort_values("빈도", ascending=False)
+        .reset_index(drop=True)
+    )
     return word_count
 
 
-def pca(df, Random_State):
-    """PCA"""
+def tfidf_vector(df):
+    """tfidf vector"""
     lis = keyword_list(df)
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
+    pipeline = Pipeline(
+        [
+            ("vect", CountVectorizer()),
+            ("tfidf", TfidfTransformer()),
+        ],
+    )
     vec = pipeline.fit_transform(lis).toarray()
+    return vec
 
-    pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(vec)
-    pca_df = pd.DataFrame(pca_df, columns = ['component 0', 'component 1'])
+
+def normalize_vector(vec):
+    """normalize vector"""
+    vec_nor = Normalizer().fit_transform(vec)
+    return vec_nor
+
+
+def pca(vec, Random_State=123):
+    """PCA"""
+
+    pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(
+        vec,
+    )
+    pca_df = pd.DataFrame(pca_df, columns=["component 0", "component 1"])
 
     return pca_df
 
 
-def nmf(df, Random_State):
+def nmf(vec, Random_State=123):
     """NMF"""
-    lis = keyword_list(df)
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
 
-    nmf_df = NMF(n_components=2, random_state=Random_State, init="random").fit_transform(vec)
-    nmf_df = pd.DataFrame(nmf_df, columns = ['component 0', 'component 1'])
+    nmf_df = NMF(
+        n_components=2, random_state=Random_State, init="random",
+    ).fit_transform(vec)
+    nmf_df = pd.DataFrame(nmf_df, columns=["component 0", "component 1"])
 
     return nmf_df
 
 
-def t_sne(df, Learn_Rate):
+def t_sne(vec, learn_Rate=100):
     """t-sne"""
-    lis = keyword_list(df)
 
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
-
-    tsne = TSNE(n_components=2, learning_rate=Learn_Rate).fit_transform(vec)
-    tsne_df = pd.DataFrame(tsne, columns = ['component 0', 'component 1'])
+    tsne = TSNE(n_components=2, learning_rate=learn_Rate).fit_transform(vec)
+    tsne_df = pd.DataFrame(tsne, columns=["component 0", "component 1"])
 
     return tsne_df
 
 
-def lsa(df):
+def lsa(vec):
     """LSA"""
-    lis = keyword_list(df)
-
-    pipeline = Pipeline([
-        ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
-    ])
-    vec = pipeline.fit_transform(lis).toarray()
 
     svd = TruncatedSVD(n_components=2).fit_transform(vec)
-    svd_df = pd.DataFrame(data=svd, columns = ['component 0', 'component 1'])
+    svd_df = pd.DataFrame(data=svd, columns=["component 0", "component 1"])
 
     return svd_df
-
-
-"""
-Normalize --> TO BE CONTINUE
-"""
