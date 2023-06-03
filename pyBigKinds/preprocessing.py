@@ -79,7 +79,7 @@ def tfidf_vector(df):
     return vec
 
 
-def normalize(vec):
+def normalize_vector(vec):
     """normalize vector"""
     vec_nor = Normalizer().fit_transform(vec)
     return vec_nor
