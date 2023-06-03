@@ -1,28 +1,28 @@
-name: test
+name: build test & upload pypi
 
 on:
-  pull_request:
-    branches: [ "develop" ]
+    push:
+      branches: [ "release" ]
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.10
+    - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: '3.8'
     - name: Install dependencies
       run: |
         make init
         make install
-    - name: Test with pytest
-      run: |
-        make test
-    - name: test with build
+    - name: Build package
       run: |
         make wheel
+    - name: Publish package
+      run: |
+        make release
