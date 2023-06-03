@@ -1,4 +1,4 @@
-## Description: What is this PR? / Why need this change? :octocat:
+## Description: What is this PR? :octocat:
 
 - 해당 PR의 내용을 설명해주세요.
 >
