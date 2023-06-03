@@ -27,7 +27,7 @@ else:
 plt.rcParams["axes.unicode_minus"] = False
 
 
-def keywords_wordcloud(df, press):
+def keywords_wordcloud(df, press: str):
     """언론사 별 키워드 워드클라우드 생성"""
     df_keywords = df[df["언론사"] == press]
     keywords = keyword_list(df_keywords)
@@ -47,7 +47,7 @@ def keywords_wordcloud(df, press):
     plt.show()
 
 
-def top_words(df, press):
+def top_words(df, press: str):
     """언론사 별 사용 단어 빈도 상위 25개"""
     df_keywords = df[df["언론사"].str.contains(press)]
     keywords = keyword_list(df_keywords)
@@ -61,31 +61,16 @@ def top_words(df, press):
     plt.show()
 
 
-# def ldavis(df, num_topic=5, passes=10, iterations=50):
-#     """ldavis"""
-#     news_words = keyword_list(df)
-#     news_dict = gensim.corpora.Dictionary(news_words)
-#     corpus = [news_dict.doc2bow(text) for text in news_words]
-
-#     ldamodel = gensim.models.ldamodel.LdaModel(
-#         corpus,
-#         num_topics=num_topic,
-#         id2word=news_dict,
-#         passes=passes,
-#         iterations=iterations,
-#     )
-
-#     vis = pyLDAvis.gensim_models.prepare(ldamodel, corpus, news_dict)
-#     pyLDAvis.display(vis)
-
-
-def scatterplot(df):
+def scatterplot(df, label: str):
     """scatter plot for dimension reduction"""
     fig, ax = plt.subplots()
+    try:
+        groups = df.groupby(label)
+    except:
+        raise ValueError("There's no label")
 
-    groups = df.groupby("label")
     for name, points in groups:
-        ax.scatter(points["component 0"], points["component 1"], label=int(name) + 1)
+        ax.scatter(points["component 0"], points["component 1"], label=name)
 
     ax.legend()
     plt.show()

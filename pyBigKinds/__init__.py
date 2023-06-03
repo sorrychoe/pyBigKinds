@@ -21,6 +21,8 @@ __all__ = [
     "keywords_wordcloud",
     "top_words",
     "scatterplot",
+    "keyword_dataframe",
+    "keyword_dataframe_no_duplicated",
     "tfidf",
     "tfidf_vector",
     "normalize_vector",
@@ -30,5 +32,4 @@ __all__ = [
     "lsa",
     "kmeans",
     "dbscan",
-    "lda",
 ]

@@ -1,5 +1,4 @@
 flake8>=3.9
-gensim==4.3.1
 isort>=5.7
 matplotlib>=3.5.3
 Pandas<2
