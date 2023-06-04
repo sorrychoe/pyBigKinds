@@ -26,4 +26,4 @@ jobs:
         make release
       env:
         user: sorrychoe
-        url: https://pypi.org/project/pyBigKinds
+        password: ${{ secrets.PYPI_PASSWORD }}
