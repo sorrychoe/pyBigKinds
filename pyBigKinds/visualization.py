@@ -1,8 +1,8 @@
 # pylint: disable=W0612
-
 import platform
 
 import matplotlib.pyplot as plt
+import pandas as pd
 import wordcloud
 
 from .base import (
@@ -13,7 +13,7 @@ from .base import (
     word_counter,
 )
 
-if platform.system() in ["Windows", "linux"]:
+if platform.system() in ["Windows", "Linux"]:
     plt.rcParams["font.family"] = "Malgun Gothic"
     font_path = "malgun"
 
@@ -29,6 +29,8 @@ plt.rcParams["axes.unicode_minus"] = False
 
 def keywords_wordcloud(df, press: str):
     """언론사 별 키워드 워드클라우드 생성"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     df_keywords = df[df["언론사"] == press]
     keywords = keyword_list(df_keywords)
     news_key = keyword_parser(keywords)
@@ -49,6 +51,8 @@ def keywords_wordcloud(df, press: str):
 
 def top_words(df, press: str):
     """언론사 별 사용 단어 빈도 상위 25개"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     df_keywords = df[df["언론사"].str.contains(press)]
     keywords = keyword_list(df_keywords)
     news_key = keyword_parser(keywords)
@@ -63,6 +67,8 @@ def top_words(df, press: str):
 
 def scatterplot(df, label: str):
     """scatter plot for dimension reduction"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     fig, ax = plt.subplots()
     try:
         groups = df.groupby(label)

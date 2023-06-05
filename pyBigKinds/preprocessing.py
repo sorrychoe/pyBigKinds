@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
@@ -16,11 +17,15 @@ from .base import (
 
 def day_range(df):
     """날짜 범위 파악"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
 
 
 def press_counter(df):
     """언론사 별 보도 빈도"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     freq = df["언론사"].value_counts()
     brod_df = pd.DataFrame(freq).reset_index()
     brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
@@ -29,6 +34,8 @@ def press_counter(df):
 
 def keyword_dataframe(df):
     """키워드 단어 빈도"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     lis = keyword_list(df)
     keywords = keyword_parser(lis)
     counter = word_counter(keywords)
@@ -38,6 +45,8 @@ def keyword_dataframe(df):
 
 def keyword_dataframe_no_duplicated(df):
     """키워드 중복 제거 단어 빈도"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     lis = keyword_list(df)
     keywords = keyword_parser(lis)
     keywords_set = duplication_remover(keywords)
@@ -48,6 +57,8 @@ def keyword_dataframe_no_duplicated(df):
 
 def tfidf(df, *press: str):
     """키워드 상대 빈도"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     if press:
         df = df[press]
     lis = keyword_list(df)
@@ -70,6 +81,8 @@ def tfidf(df, *press: str):
 
 def tfidf_vector(df):
     """tfidf vector"""
+    if type(df) != pd.DataFrame:
+        raise TypeError("input type is to be have to DataFrame")
     lis = keyword_list(df)
     pipeline = Pipeline(
         [
@@ -83,13 +96,16 @@ def tfidf_vector(df):
 
 def normalize_vector(vec):
     """normalize vector"""
+    if type(vec) != np.ndarray:
+        raise TypeError("input type is to be have to ndarray")
     vec_nor = Normalizer().fit_transform(vec)
     return vec_nor
 
 
 def pca(vec, Random_State=123):
     """PCA"""
-
+    if type(vec) != np.ndarray:
+        raise TypeError("input type is to be have to ndarray")
     pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(
         vec,
     )
@@ -100,7 +116,8 @@ def pca(vec, Random_State=123):
 
 def nmf(vec, Random_State=123):
     """NMF"""
-
+    if type(vec) != np.ndarray:
+        raise TypeError("input type is to be have to ndarray")
     nmf_df = NMF(
         n_components=2, random_state=Random_State, init="random",
     ).fit_transform(vec)
@@ -111,7 +128,8 @@ def nmf(vec, Random_State=123):
 
 def t_sne(vec, learn_Rate=100):
     """t-sne"""
-
+    if type(vec) != np.ndarray:
+        raise TypeError("input type is to be have to ndarray")
     tsne = TSNE(n_components=2, learning_rate=learn_Rate).fit_transform(vec)
     tsne_df = pd.DataFrame(tsne, columns=["component 0", "component 1"])
 
@@ -120,7 +138,8 @@ def t_sne(vec, learn_Rate=100):
 
 def lsa(vec):
     """LSA"""
-
+    if type(vec) != np.ndarray:
+        raise TypeError("input type is to be have to ndarray")
     svd = TruncatedSVD(n_components=2).fit_transform(vec)
     svd_df = pd.DataFrame(data=svd, columns=["component 0", "component 1"])
 
