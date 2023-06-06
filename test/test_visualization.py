@@ -15,7 +15,7 @@ def test_keywords_wordcloud(vector):
 
 def test_top_words(vector):
     with pytest.raises(TypeError):
-        top_words(vector, 25, "press")
+        top_words(vector, "press")
 
 
 def test_scatterplot(vector):
