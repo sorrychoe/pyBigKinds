@@ -73,7 +73,7 @@ disable=raw-checker-failed,
         missing-module-docstring,
         duplicate-code,
         consider-using-enumerate,
-        C0114, C0123, C0103, W1116, W0511, W1401, W0105, W0707, R0914
+        C0114, C0103, W1116, W0511, W1401, W0105, W0707, R0914, R1705
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
