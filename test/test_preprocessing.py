@@ -10,7 +10,6 @@ def dataframe():
 
 
 def test_press_counter(dataframe):
-    """언론사 별 보도 빈도"""
     counter = press_counter(dataframe)
     assert counter.columns[0] == '언론사'
     assert counter.columns[1] == '기사'
@@ -18,7 +17,6 @@ def test_press_counter(dataframe):
 
 
 def test_keyword_dataframe(dataframe):
-    """키워드 단어 빈도"""
     data = keyword_dataframe(dataframe)
     assert data.columns[0] == '단어'
     assert data.columns[1] == '빈도'
@@ -26,7 +24,6 @@ def test_keyword_dataframe(dataframe):
 
 
 def test_keyword_dataframe_no_duplicated(dataframe):
-    """키워드 중복 제거 단어 빈도"""
     data = keyword_dataframe_no_duplicated(dataframe)
     assert data.columns[0] == '단어'
     assert data.columns[1] == '빈도'
@@ -34,7 +31,6 @@ def test_keyword_dataframe_no_duplicated(dataframe):
 
 
 def test_tfidf(dataframe):
-    """키워드 상대 빈도"""
     df = tfidf(dataframe)
     assert df.columns[0] == '단어'
     assert df.columns[1] == '빈도'
@@ -42,7 +38,6 @@ def test_tfidf(dataframe):
 
 
 def test_tfidf_vector(dataframe):
-    """tfidf vector"""
     vector = tfidf_vector(dataframe)
     assert type(vector) == np.ndarray
     assert vector.shape == (31,2160)
@@ -50,7 +45,6 @@ def test_tfidf_vector(dataframe):
 
 
 def test_normalize_vector(dataframe):
-    """normalize vector"""
     vector = tfidf_vector(dataframe)
     normal = normalize_vector(vector)
     assert normal.shape == vector.shape
@@ -66,8 +60,6 @@ def test_pca(dataframe):
 
 
 def test_nmf(dataframe):
-    """NMF"""
-
     vector = tfidf_vector(dataframe)
     nmf_df = nmf(vector)
 
@@ -77,8 +69,6 @@ def test_nmf(dataframe):
 
 
 def test_t_sne(dataframe):
-    """t-sne"""
-
     vector = tfidf_vector(dataframe)
     tsne_df = t_sne(vector, 100)
 
@@ -88,7 +78,6 @@ def test_t_sne(dataframe):
 
 
 def test_lsa(dataframe):
-    """LSA"""
     vector = tfidf_vector(dataframe)
     lsa_df = lsa(vector)
 
