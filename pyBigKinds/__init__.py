@@ -33,4 +33,5 @@ __all__ = [
     "kmeans",
     "dbscan",
     "lda",
+    "association"
 ]

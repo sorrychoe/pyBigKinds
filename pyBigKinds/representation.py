@@ -6,6 +6,8 @@ import tomotopy as tp
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.manifold import TSNE
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
 
 from .base import keyword_list, keyword_parser
 
@@ -110,3 +112,15 @@ def lda(dataframe, k=10, train=100, fit=10):
         return model
     else:
         raise TypeError("input type is to be have to DataFrame")
+    
+    
+def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1, metric="confidence"):
+    words = keyword_parser(keyword_list(dataframe))
+    te = TransactionEncoder()
+    te_data = te.fit(words).transform(words, sparse=True)
+    te_df = pd.DataFrame.sparse.from_spmatrix(te_data, columns=te.columns_)
+
+    result = apriori(te_df, min_support=min_support, use_colnames=use_colnames)
+    
+    return association_rules(result, metric=metric, min_threshold=min_threshold) 
+    
