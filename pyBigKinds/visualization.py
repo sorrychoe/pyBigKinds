@@ -30,7 +30,7 @@ plt.rcParams["axes.unicode_minus"] = False
 def keywords_wordcloud(df, press):
     """언론사 별 키워드 워드클라우드 생성"""
     if isinstance(df, pd.DataFrame):
-        df_keywords = df[df[press] == press]
+        df_keywords = df[df["언론사"] == press]
         keywords = keyword_list(df_keywords)
         news_key = keyword_parser(keywords)
         news_key = duplication_remover(news_key)
@@ -53,7 +53,7 @@ def keywords_wordcloud(df, press):
 def top_words(df, press, top_n=25):
     """언론사 별 사용 단어 빈도 상위 n개"""
     if isinstance(df, pd.DataFrame):
-        df_keywords = df[df[press].str.contains(press)]
+        df_keywords = df[df["언론사"].str.contains(press)]
         keywords = keyword_list(df_keywords)
         news_key = keyword_parser(keywords)
         news_key = duplication_remover(news_key)
