@@ -9,13 +9,6 @@ def dataframe():
     return df
 
 
-def test_press_counter(dataframe):
-    counter = press_counter(dataframe)
-    assert counter.columns[0] == '언론사'
-    assert counter.columns[1] == '기사'
-    assert counter['기사'].max() == counter['기사'][0]
-
-
 def test_keyword_dataframe(dataframe):
     data = keyword_dataframe(dataframe)
     assert data.columns[0] == '단어'
@@ -41,7 +34,6 @@ def test_tfidf_vector(dataframe):
     vector = tfidf_vector(dataframe)
     assert type(vector) == np.ndarray
     assert vector.shape == (31,2160)
-
 
 
 def test_normalize_vector(dataframe):

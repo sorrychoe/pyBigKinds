@@ -11,6 +11,17 @@ def vector():
     vector = tfidf_vector(df)
     return vector
 
+@pytest.fixture(scope="module")
+def dataframe():
+    df = pd.read_excel("test/test.xlsx")
+    return df
+
+def test_press_counter(dataframe):
+    counter = press_counter(dataframe)
+    assert counter.columns[0] == '언론사'
+    assert counter.columns[1] == '기사'
+    assert counter['기사'].max() == counter['기사'][0]
+
 def test_pca(vector):
     pca_df = pca(vector)
 
@@ -52,3 +63,9 @@ def test_kmeans(vector):
 def test_dbscan(vector):
     cluster = dbscan(vector, 0.1, 1)
     assert type(cluster) == np.ndarray
+
+
+def test_lda(dataframe):
+    topics = lda(dataframe)
+    assert type(topics.vocab_df) == np.ndarray
+    assert topics.k == 10

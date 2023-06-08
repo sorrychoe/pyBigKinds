@@ -13,25 +13,6 @@ from .base import (
 )
 
 
-def day_range(df):
-    """날짜 범위 파악"""
-    if isinstance(df, pd.DataFrame):
-        print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
-    else:
-        raise TypeError("input type is to be have to DataFrame")
-
-
-def press_counter(df):
-    """언론사 별 보도 빈도"""
-    if isinstance(df, pd.DataFrame):
-        freq = df["언론사"].value_counts()
-        brod_df = pd.DataFrame(freq).reset_index()
-        brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
-        return brod_df
-    else:
-        raise TypeError("input type is to be have to DataFrame")
-
-
 def keyword_dataframe(df):
     """키워드 단어 빈도"""
     if isinstance(df, pd.DataFrame):

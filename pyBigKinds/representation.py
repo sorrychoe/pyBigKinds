@@ -1,10 +1,32 @@
-# pylint: disable=E0601,W0612
+# pylint: disable=E1101
 
 import numpy as np
 import pandas as pd
+import tomotopy as tp
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.manifold import TSNE
+
+from .base import keyword_list, keyword_parser
+
+
+def day_range(df):
+    """날짜 범위 파악"""
+    if isinstance(df, pd.DataFrame):
+        print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
+    else:
+        raise TypeError("input type is to be have to DataFrame")
+
+
+def press_counter(df):
+    """언론사 별 보도 빈도"""
+    if isinstance(df, pd.DataFrame):
+        freq = df["언론사"].value_counts()
+        brod_df = pd.DataFrame(freq).reset_index()
+        brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
+        return brod_df
+    else:
+        raise TypeError("input type is to be have to DataFrame")
 
 
 def pca(vec, Random_State=123):
@@ -71,3 +93,20 @@ def dbscan(vec, eps, min_samples, metric="euclidean"):
         return dbscan_model.fit_predict(vec)
     else:
         raise TypeError("input type is to be have to ndarray")
+
+
+def lda(dataframe, k=10, train=100, fit=10):
+    """topic modeling"""
+    if isinstance(dataframe, pd.DataFrame):
+        lis = keyword_parser(keyword_list(dataframe))
+        model = tp.LDAModel(k=k)
+
+        for words in lis:
+            model.add_doc(words)
+
+        for i in range(0, train, fit):
+            model.train(i)
+
+        return model
+    else:
+        raise TypeError("input type is to be have to DataFrame")
