@@ -1,6 +1,7 @@
 flake8>=3.9
 isort>=5.7
 matplotlib>=3.5.3
+mlxtend>=0.22.0
 openpyxl>=3.1.2
 Pandas<2
 pre-commit>=2.13
@@ -9,4 +10,3 @@ pytest>=7
 scikit-learn>=1.0.0
 tomotopy>=0.12.4
 wordcloud>=1.8.2.2
-mlxtend>=0.22.0
