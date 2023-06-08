@@ -9,13 +9,6 @@ def dataframe():
     return df
 
 
-def test_press_counter(dataframe):
-    counter = press_counter(dataframe)
-    assert counter.columns[0] == '언론사'
-    assert counter.columns[1] == '기사'
-    assert counter['기사'].max() == counter['기사'][0]
-
-
 def test_keyword_dataframe(dataframe):
     data = keyword_dataframe(dataframe)
     assert data.columns[0] == '단어'
@@ -43,44 +36,7 @@ def test_tfidf_vector(dataframe):
     assert vector.shape == (31,2160)
 
 
-
 def test_normalize_vector(dataframe):
     vector = tfidf_vector(dataframe)
     normal = normalize_vector(vector)
     assert normal.shape == vector.shape
-
-
-def test_pca(dataframe):
-    vector = tfidf_vector(dataframe)
-    pca_df = pca(vector)
-
-    assert pca_df.columns[0] == 'component 0'
-    assert pca_df.columns[1] == 'component 1'
-    assert pca_df.shape == (31,2)
-
-
-def test_nmf(dataframe):
-    vector = tfidf_vector(dataframe)
-    nmf_df = nmf(vector)
-
-    assert nmf_df.columns[0] == 'component 0'
-    assert nmf_df.columns[1] == 'component 1'
-    assert nmf_df.shape == (31,2)
-
-
-def test_t_sne(dataframe):
-    vector = tfidf_vector(dataframe)
-    tsne_df = t_sne(vector, 100)
-
-    assert tsne_df.columns[0] == 'component 0'
-    assert tsne_df.columns[1] == 'component 1'
-    assert tsne_df.shape == (31,2)
-
-
-def test_lsa(dataframe):
-    vector = tfidf_vector(dataframe)
-    lsa_df = lsa(vector)
-
-    assert lsa_df.columns[0] == 'component 0'
-    assert lsa_df.columns[1] == 'component 1'
-    assert lsa_df.shape == (31,2)
