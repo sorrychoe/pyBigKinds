@@ -69,3 +69,9 @@ def test_lda(dataframe):
     topics = lda(dataframe)
     assert type(topics.vocab_df) == np.ndarray
     assert topics.k == 10
+
+
+def test_association(dataframe):
+    apriopri = association(dataframe)
+    assert type(apriopri) == pd.DataFrame
+    assert apriopri.shape == (8, 10)
