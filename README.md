@@ -20,23 +20,15 @@ pyBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출�
   python -m pip install pyBigKinds
   ```
 
-## Example
+## Usage
 
-```python
-import pyBigKinds as bk
-
-bk.press_counter(df)
-
-```
-
-## Authors
-
-- [sorrychoe](https://www.github.com/sorrychoe)
+![](docs/example1.png)
+![](docs/example2.png)
 
 
 ## License
 
-- [MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/)
 
 ## you have some issue?
 
