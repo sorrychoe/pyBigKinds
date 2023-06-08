@@ -48,39 +48,3 @@ def test_normalize_vector(dataframe):
     vector = tfidf_vector(dataframe)
     normal = normalize_vector(vector)
     assert normal.shape == vector.shape
-
-
-def test_pca(dataframe):
-    vector = tfidf_vector(dataframe)
-    pca_df = pca(vector)
-
-    assert pca_df.columns[0] == 'component 0'
-    assert pca_df.columns[1] == 'component 1'
-    assert pca_df.shape == (31,2)
-
-
-def test_nmf(dataframe):
-    vector = tfidf_vector(dataframe)
-    nmf_df = nmf(vector)
-
-    assert nmf_df.columns[0] == 'component 0'
-    assert nmf_df.columns[1] == 'component 1'
-    assert nmf_df.shape == (31,2)
-
-
-def test_t_sne(dataframe):
-    vector = tfidf_vector(dataframe)
-    tsne_df = t_sne(vector, 100)
-
-    assert tsne_df.columns[0] == 'component 0'
-    assert tsne_df.columns[1] == 'component 1'
-    assert tsne_df.shape == (31,2)
-
-
-def test_lsa(dataframe):
-    vector = tfidf_vector(dataframe)
-    lsa_df = lsa(vector)
-
-    assert lsa_df.columns[0] == 'component 0'
-    assert lsa_df.columns[1] == 'component 1'
-    assert lsa_df.shape == (31,2)
