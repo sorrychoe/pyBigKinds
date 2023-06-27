@@ -65,6 +65,12 @@ def test_dbscan(vector):
     assert type(cluster) == np.ndarray
 
 
+def test_meanshift(vector):
+    cluster = meanshift(vector)
+    assert type(cluster) == np.ndarray
+    assert np.unique(cluster).shape == (4,)
+
+
 def test_lda(dataframe):
     topics = lda(dataframe)
     assert type(topics.vocab_df) == np.ndarray
