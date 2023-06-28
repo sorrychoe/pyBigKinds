@@ -4,9 +4,9 @@ import pandas as pd
 def header_remover(df):
     """[]로 표시된 헤더 삭제"""
     if isinstance(df, pd.DataFrame):
-        ans = df["제목"].str.replace("\[[^)]*\]", "")
+        ans = df["제목"].str.replace(r"\[[^)]*\]", "", regex=True)
     elif isinstance(df, list):
-        ans = df.str.replace("\[[^)]*\]", "")
+        ans = df.str.replace(r"\[[^)]*\]", "", regex=True)
     else:
         raise TypeError("input value is to be have to list or DataFrame")
     return ans

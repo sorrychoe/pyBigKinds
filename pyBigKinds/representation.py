@@ -5,7 +5,7 @@ import pandas as pd
 import tomotopy as tp
 from mlxtend.frequent_patterns import apriori, association_rules
 from mlxtend.preprocessing import TransactionEncoder
-from sklearn.cluster import DBSCAN, KMeans
+from sklearn.cluster import DBSCAN, KMeans, MeanShift, estimate_bandwidth
 from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.manifold import TSNE
 
@@ -25,7 +25,7 @@ def press_counter(df):
     if isinstance(df, pd.DataFrame):
         freq = df["언론사"].value_counts()
         brod_df = pd.DataFrame(freq).reset_index()
-        brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
+        brod_df.rename(columns={"count": "기사"}, inplace=True)
         return brod_df
     else:
         raise TypeError("input type is to be have to DataFrame")
@@ -93,6 +93,19 @@ def dbscan(vec, eps, min_samples, metric="euclidean"):
     if isinstance(vec, np.ndarray):
         dbscan_model = DBSCAN(eps=eps, min_samples=min_samples, metric=metric)
         return dbscan_model.fit_predict(vec)
+    else:
+        raise TypeError("input type is to be have to ndarray")
+
+
+def meanshift(vec, qt=0.25):
+    """Mean Shift"""
+    if isinstance(vec, np.ndarray):
+        best_bandwidth = estimate_bandwidth(vec, quantile=qt)
+        print(f'{qt}기준 최적 bandwidth 값:', round(best_bandwidth, 2))
+
+        ms_model = MeanShift(bandwidth=best_bandwidth)
+        print('cluster 갯수:', np.unique(ms_model.fit_predict(vec)))
+        return ms_model.fit_predict(vec)
     else:
         raise TypeError("input type is to be have to ndarray")
 
