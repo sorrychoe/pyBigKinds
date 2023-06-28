@@ -25,7 +25,7 @@ def press_counter(df):
     if isinstance(df, pd.DataFrame):
         freq = df["언론사"].value_counts()
         brod_df = pd.DataFrame(freq).reset_index()
-        brod_df.rename(columns={"index": "언론사", "언론사": "기사"}, inplace=True)
+        brod_df.rename(columns={"count": "기사"}, inplace=True)
         return brod_df
     else:
         raise TypeError("input type is to be have to DataFrame")

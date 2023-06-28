@@ -3,7 +3,7 @@ isort>=5.7
 matplotlib>=3.5.3
 mlxtend>=0.22.0
 openpyxl>=3.1.2
-Pandas<2
+Pandas>=1.5.2
 pre-commit>=2.13
 pylint>=2.9
 pytest>=7
