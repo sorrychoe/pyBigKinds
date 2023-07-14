@@ -1,7 +1,8 @@
 import pandas as pd
+import pytest
+
 from pyBigKinds import *
 
-import pytest
 
 @pytest.fixture(scope="module")
 def vector():
