@@ -22,7 +22,20 @@ pyBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출�
 
 ## Usage
 
+```python
+import pyBigKinds as bk
+
+bk.press_counter(df)
+```
+
 ![](docs/example1.png)
+
+```python
+import pyBigKinds as bk
+
+bk.keywords_wordcloud(df, "중앙일보")
+```
+
 ![](docs/example2.png)
 
 
