@@ -11,10 +11,12 @@ def vector():
     vector = tfidf_vector(df)
     return vector
 
+
 @pytest.fixture(scope="module")
 def dataframe():
     df = pd.read_excel("test/test.xlsx")
     return df
+
 
 def test_press_counter(dataframe):
     counter = press_counter(dataframe)
@@ -22,12 +24,13 @@ def test_press_counter(dataframe):
     assert counter.columns[1] == '기사'
     assert counter['기사'].max() == counter['기사'][0]
 
+
 def test_pca(vector):
     pca_df = pca(vector)
 
     assert pca_df.columns[0] == 'component 0'
     assert pca_df.columns[1] == 'component 1'
-    assert pca_df.shape == (31,2)
+    assert pca_df.shape == (31, 2)
 
 
 def test_nmf(vector):
@@ -35,7 +38,7 @@ def test_nmf(vector):
 
     assert nmf_df.columns[0] == 'component 0'
     assert nmf_df.columns[1] == 'component 1'
-    assert nmf_df.shape == (31,2)
+    assert nmf_df.shape == (31, 2)
 
 
 def test_t_sne(vector):
@@ -43,7 +46,7 @@ def test_t_sne(vector):
 
     assert tsne_df.columns[0] == 'component 0'
     assert tsne_df.columns[1] == 'component 1'
-    assert tsne_df.shape == (31,2)
+    assert tsne_df.shape == (31, 2)
 
 
 def test_lsa(vector):
@@ -51,7 +54,7 @@ def test_lsa(vector):
 
     assert lsa_df.columns[0] == 'component 0'
     assert lsa_df.columns[1] == 'component 1'
-    assert lsa_df.shape == (31,2)
+    assert lsa_df.shape == (31, 2)
 
 
 def test_kmeans(vector):
