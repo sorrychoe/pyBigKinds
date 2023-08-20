@@ -28,7 +28,7 @@ import pyBigKinds as bk
 bk.press_counter(df)
 ```
 
-![](docs/example1.png)
+![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example1.png)
 
 ```python
 import pyBigKinds as bk
@@ -36,7 +36,7 @@ import pyBigKinds as bk
 bk.keywords_wordcloud(df, "중앙일보")
 ```
 
-![](docs/example2.png)
+![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example2.png)
 
 
 ## License
