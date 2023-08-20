@@ -32,9 +32,11 @@ uninstall:
 wheel:
 	$(python) setup.py bdist_wheel
 
+lint:
+	$(python) -m isort --settings-file=setup.cfg pyBigKinds/ test/
+
 format:
-	$(python) -m isort --settings-file=setup.cfg pyBigKinds/
-	$(python) -m flake8 --config=setup.cfg pyBigKinds/
+	$(python) -m flake8 --config=setup.cfg pyBigKinds/ test/
 	$(python) -m pylint --rcfile=.pylintrc pyBigKinds/
 
 test:

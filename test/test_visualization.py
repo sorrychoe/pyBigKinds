@@ -1,7 +1,8 @@
 import pandas as pd
+import pytest
+
 from pyBigKinds import *
 
-import pytest
 
 @pytest.fixture(scope="module")
 def vector():
@@ -9,9 +10,11 @@ def vector():
     vector = tfidf_vector(df)
     return vector
 
+
 def test_keywords_wordcloud(vector):
     with pytest.raises(TypeError):
         keywords_wordcloud(vector, "press")
+
 
 def test_top_words(vector):
     with pytest.raises(TypeError):
