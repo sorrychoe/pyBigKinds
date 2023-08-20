@@ -1,11 +1,17 @@
-import pytest
+# pylint: disable=F403
+# pylint: disable=F405
+
 import pandas as pd
+import pytest
+
 from pyBigKinds import *
+
 
 @pytest.fixture(scope="module")
 def dataframe():
     df = pd.read_excel("test/test.xlsx")
     return df
+
 
 def test_header_remover(dataframe):
     ans = header_remover(dataframe)

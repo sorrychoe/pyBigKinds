@@ -1,7 +1,9 @@
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
+
 from pyBigKinds import *
+
 
 @pytest.fixture(scope="module")
 def dataframe():
@@ -33,7 +35,7 @@ def test_tfidf(dataframe):
 def test_tfidf_vector(dataframe):
     vector = tfidf_vector(dataframe)
     assert type(vector) == np.ndarray
-    assert vector.shape == (31,2160)
+    assert vector.shape == (31, 2160)
 
 
 def test_normalize_vector(dataframe):
