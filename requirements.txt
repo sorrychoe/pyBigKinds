@@ -8,5 +8,5 @@ pre-commit>=2.13
 pylint>=2.9
 pytest>=7
 scikit-learn>=1.0.0
-tomotopy>=0.12.4
+tomotopy==0.12.4
 wordcloud>=1.8.2.2
