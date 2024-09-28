@@ -22,13 +22,28 @@ elif platform.system() == "Darwin":
     font_path = "AppleGothic"
 
 else:
-    print("미지원 os입니다.")
+    print("Unsupported OS.")
 
 plt.rcParams["axes.unicode_minus"] = False
 
 
 def keywords_wordcloud(df, press):
-    """언론사 별 키워드 워드클라우드 생성"""
+    """
+    Generates a WordCloud for keywords based on a specific press company in the DataFrame.
+
+    This function filters the input DataFrame by the specified press company, extracts keywords, 
+    removes duplicates, counts keyword frequencies, and generates a WordCloud image from the frequencies.
+
+    Parameters:
+    df (pandas.DataFrame): The input DataFrame containing text data, typically with '언론사' and '키워드' columns.
+    press (str): The name of the press company to filter the DataFrame by.
+
+    Raises:
+    TypeError: If the input is not a pandas DataFrame.
+
+    Returns:
+    None: Displays the WordCloud visualization.
+    """
     if isinstance(df, pd.DataFrame):
         df_keywords = df[df["언론사"] == press]
         keywords = keyword_list(df_keywords)
@@ -51,7 +66,23 @@ def keywords_wordcloud(df, press):
 
 
 def top_words(df, press, top_n=25):
-    """언론사 별 사용 단어 빈도 상위 n개"""
+    """
+    Displays a horizontal bar chart of the top N most frequently used words for a specific press company.
+
+    This function filters the input DataFrame by the specified press company, extracts keywords, removes duplicates,
+    and counts the frequency of each word. It then displays a bar chart showing the top N words by frequency.
+
+    Parameters:
+    df (pandas.DataFrame): The input DataFrame containing text data, typically with '언론사' and '키워드' columns.
+    press (str): The name or partial name of the press company to filter the DataFrame by.
+    top_n (int, optional): The number of top words to display. Default is 25.
+
+    Raises:
+    TypeError: If the input is not a pandas DataFrame.
+
+    Returns:
+    None: Displays a horizontal bar chart.
+    """
     if isinstance(df, pd.DataFrame):
         df_keywords = df[df["언론사"].str.contains(press)]
         keywords = keyword_list(df_keywords)
@@ -68,7 +99,21 @@ def top_words(df, press, top_n=25):
 
 
 def scatterplot(df, label):
-    """scatter plot for dimension reduction"""
+    """
+    Creates a scatter plot for visualizing dimension reduction results with group labels.
+
+    This function plots the two components (e.g., from PCA, t-SNE, NMF) and colors the points based on the specified group labels.
+
+    Parameters:
+    df (pandas.DataFrame): The input DataFrame containing at least two columns, 'component 0' and 'component 1', representing reduced dimensions.
+    label (str): The column name in the DataFrame containing group labels for coloring the scatter plot points.
+
+    Raises:
+    TypeError: If the input is not a pandas DataFrame.
+
+    Returns:
+    None: Displays a scatter plot.
+    """
     if isinstance(df, pd.DataFrame):
         fig, ax = plt.subplots()
         groups = df.groupby(label)
