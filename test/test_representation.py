@@ -73,7 +73,7 @@ def test_dbscan(vector):
 def test_meanshift(vector):
     cluster = meanshift(vector)
     assert type(cluster) == np.ndarray
-    assert np.unique(cluster).shape == (4,)
+    assert np.unique(cluster).shape == (5,)
 
 
 def test_lda(dataframe):
