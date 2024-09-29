@@ -1,3 +1,5 @@
+# pylint: disable=C0301
+
 import pandas as pd
 
 

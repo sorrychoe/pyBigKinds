@@ -1,3 +1,5 @@
+# pylint: disable=E721
+
 import numpy as np
 import pandas as pd
 import pytest

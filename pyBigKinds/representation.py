@@ -1,4 +1,4 @@
-# pylint: disable=E1101
+# pylint: disable=E1101, C0301
 
 import numpy as np
 import pandas as pd
@@ -242,7 +242,7 @@ def lda(dataframe, k=10, train=100, fit=10):
     Applies Latent Dirichlet Allocation (LDA) for topic modeling on a DataFrame.
 
     This function extracts keywords from a DataFrame, then applies LDA to find 'k' topics in the data.
-    
+
     Parameters:
     dataframe (pandas.DataFrame): The input DataFrame containing text data.
     k (int, optional): The number of topics to find. Default is 10.
@@ -274,7 +274,7 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
     """
     Applies the Apriori algorithm to discover association rules from keywords in a DataFrame.
 
-    This function extracts keywords, applies the Apriori algorithm to find frequent itemsets, 
+    This function extracts keywords, applies the Apriori algorithm to find frequent itemsets,
     and generates association rules based on the specified metric.
 
     Parameters:
@@ -298,4 +298,3 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
     result = apriori(te_df, min_support=min_support, use_colnames=use_colnames)
 
     return association_rules(result, metric=metric, min_threshold=min_threshold)
-
