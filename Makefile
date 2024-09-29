@@ -3,8 +3,8 @@
 NAME = BigKindsParser
 
 SHELL := bash
-
 python = python3
+pip_user_option = --user
 
 ifeq ($(OS),Windows_NT)
 	python := python
@@ -19,9 +19,9 @@ endif
 
 init:
 	$(python) -m pip install $(pip_user_option) --upgrade pip && \
-	$(python) -m pip install $(pip_user_option) --upgrade 'build>=0.7' 'setuptools>=61.0,<64.0' 'wheel>=0.37' && \
-	$(python) -m pip install $(pip_user_option) -r requirements.txt \
-	pre-commit install
+	$(python) -m pip install $(pip_user_option) --upgrade 'build>=0.7' 'setuptools>=61.0' 'wheel>=0.37' && \
+	$(python) -m pip install $(pip_user_option) -r requirements.txt &&\
+	$(python) -m pre_commit install
 
 install:
 	$(install_extension)
@@ -36,7 +36,7 @@ lint:
 	$(python) -m isort --settings-file=setup.cfg pyBigKinds/ test/
 
 format:
-	$(python) -m flake8 --config=setup.cfg pyBigKinds/ test/
+	$(python) -m flake8 --config=setup.cfg pyBigKinds/
 	$(python) -m pylint --rcfile=.pylintrc pyBigKinds/
 
 test:

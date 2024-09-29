@@ -1,4 +1,4 @@
-# pylint: disable=W0612
+# pylint: disable=W0612, C0301, E0606
 import platform
 
 import matplotlib.pyplot as plt
@@ -31,7 +31,7 @@ def keywords_wordcloud(df, press):
     """
     Generates a WordCloud for keywords based on a specific press company in the DataFrame.
 
-    This function filters the input DataFrame by the specified press company, extracts keywords, 
+    This function filters the input DataFrame by the specified press company, extracts keywords,
     removes duplicates, counts keyword frequencies, and generates a WordCloud image from the frequencies.
 
     Parameters:
