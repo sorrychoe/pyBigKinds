@@ -5,7 +5,7 @@ import pandas as pd
 
 def header_remover(df):
     """
-    Removes any text enclosed in square brackets ([]) from the 'title' column of a DataFrame or list.
+    Removes any text enclosed in square brackets ([]) from the '제목' (title) column of a DataFrame or list.
 
     Parameters:
     df (pandas.DataFrame or list): The input DataFrame or list containing a column or text data where headers (enclosed in square brackets) need to be removed.
@@ -17,9 +17,9 @@ def header_remover(df):
     TypeError: If the input is not a pandas DataFrame or list.
     """
     if isinstance(df, pd.DataFrame):
-        ans = df["제목"].str.replace(r"\[[^)]*\]", "", regex=True)
+        ans = df["제목"].str.replace(r"\[[^\]]*\]", "", regex=True)
     elif isinstance(df, list):
-        ans = df.str.replace(r"\[[^)]*\]", "", regex=True)
+        ans = pd.Series(df).str.replace(r"\[[^\]]*\]", "", regex=True).tolist()
     else:
         raise TypeError("input value is to be have to list or DataFrame")
     return ans
@@ -27,23 +27,25 @@ def header_remover(df):
 
 def keyword_list(df):
     """
-    Converts the '키워드' column of a DataFrame to a list or returns a list as-is if the input is already a list.
+    Converts the '키워드' column of a DataFrame to a list or returns a list as-is if the input is already a list or Series.
 
     Parameters:
-    df (pandas.DataFrame or list): The input DataFrame containing the '키워드' column or a list to be converted to a list format.
+    df (pandas.DataFrame or pandas.Series or list): The input data containing keywords.
 
     Returns:
-    list: A list of keywords from the '키워드' column of the DataFrame, or a list itself if the input is a list.
+    list: A list of keywords.
 
     Raises:
-    TypeError: If the input is not a pandas DataFrame or list.
+    TypeError: If the input is not a pandas DataFrame, Series, or list.
     """
     if isinstance(df, pd.DataFrame):
         return df["키워드"].values.tolist()
-    elif isinstance(df, list):
+    elif isinstance(df, pd.Series):
         return df.values.tolist()
+    elif isinstance(df, list):
+        return df
     else:
-        raise TypeError("input value is to be have to list or DataFrame")
+        raise TypeError("input value is to be have to list, Series or DataFrame")
 
 
 def keyword_parser(text_list):
