@@ -85,4 +85,4 @@ def test_lda(dataframe):
 def test_association(dataframe):
     apriopri = association(dataframe)
     assert type(apriopri) == pd.DataFrame
-    assert apriopri.shape == (8, 10)
+    assert apriopri.shape == (8, 14)

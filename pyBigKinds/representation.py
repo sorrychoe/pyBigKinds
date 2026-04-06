@@ -293,7 +293,12 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
     words = keyword_parser(keyword_list(dataframe))
     te = TransactionEncoder()
     te_data = te.fit(words).transform(words, sparse=True)
-    te_df = pd.DataFrame.sparse.from_spmatrix(te_data, columns=te.columns_)
+    te_df = pd.DataFrame(
+        {
+            col: pd.arrays.SparseArray(te_data[:, i].toarray().ravel().astype(bool))
+            for i, col in enumerate(te.columns_)
+        },
+    )
 
     result = apriori(te_df, min_support=min_support, use_colnames=use_colnames)
 

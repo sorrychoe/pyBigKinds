@@ -68,16 +68,16 @@ def keyword_dataframe_no_duplicated(df):
         raise TypeError("input type is to be have to DataFrame")
 
 
-def tfidf(df, *press):
+def tfidf(df, col=None):
     """
     Calculates the Term Frequency-Inverse Document Frequency (TF-IDF) for keywords in the input DataFrame.
 
-    This function takes an optional column name (press) to select a specific column for TF-IDF calculations. It uses the TfidfVectorizer to compute TF-IDF values for the keywords
+    This function takes an optional column name (col) to select a specific column for TF-IDF calculations. It uses the TfidfVectorizer to compute TF-IDF values for the keywords
     and returns a DataFrame of words with their corresponding TF-IDF scores.
 
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing text data, typically in a '키워드' column.
-    press (str, optional): A column name specifying which column to apply the TF-IDF transformation. Defaults to None.
+    col (str, optional): A column name specifying which column to apply the TF-IDF transformation. Defaults to None.
 
     Returns:
     pandas.DataFrame: A DataFrame with two columns - '단어' (keyword) and '빈도' (TF-IDF score), sorted by score in descending order.
@@ -86,8 +86,8 @@ def tfidf(df, *press):
     TypeError: If the input is not a pandas DataFrame.
     """
     if isinstance(df, pd.DataFrame):
-        if isinstance(press, str):
-            df = df[press]
+        if isinstance(col, str):
+            df = df[col]
         lis = keyword_list(df)
 
         tfidfv = TfidfVectorizer()
