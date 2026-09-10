@@ -1,5 +1,7 @@
 # pylint: disable=E1101, C0301
 
+import logging
+
 import numpy as np
 import pandas as pd
 import tomotopy as tp
@@ -11,12 +13,14 @@ from sklearn.manifold import TSNE
 
 from .base import keyword_list, keyword_parser
 
+logger = logging.getLogger(__name__)
+
 
 def day_range(df):
     """
-    Prints the first and last date in the '일자' (date) column of a DataFrame.
+    Logs the first and last date in the '일자' (date) column of a DataFrame.
 
-    This function prints the minimum and maximum values from the '일자' column to display the range of dates in the dataset.
+    This function logs the minimum and maximum values from the '일자' column to display the range of dates in the dataset.
 
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing a '일자' column with date values.
@@ -25,7 +29,7 @@ def day_range(df):
     TypeError: If the input is not a pandas DataFrame.
     """
     if isinstance(df, pd.DataFrame):
-        print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
+        logger.info("first day: %s, last day: %s", df["일자"].min(), df["일자"].max())
     else:
         raise TypeError("input type is to be have to DataFrame")
 
@@ -47,15 +51,18 @@ def press_counter(df):
     TypeError: If the input is not a pandas DataFrame.
     """
     if isinstance(df, pd.DataFrame):
-        freq = df["언론사"].value_counts()
-        brod_df = pd.DataFrame(freq).reset_index()
-        brod_df.rename(columns={"count": "기사"}, inplace=True)
+        brod_df = (
+            df["언론사"]
+            .value_counts()
+            .rename_axis("언론사")
+            .reset_index(name="기사")
+        )
         return brod_df
     else:
         raise TypeError("input type is to be have to DataFrame")
 
 
-def pca(vec, Random_State=123):
+def pca(vec, random_state=123):
     """
     Performs Principal Component Analysis (PCA) on a vector to reduce its dimensions to 2 components.
 
@@ -64,7 +71,7 @@ def pca(vec, Random_State=123):
 
     Parameters:
     vec (numpy.ndarray): The input array to perform PCA on.
-    Random_State (int, optional): The random seed for reproducibility. Default is 123.
+    random_state (int, optional): The random seed for reproducibility. Default is 123.
 
     Returns:
     pandas.DataFrame: A DataFrame containing two columns - 'component 0' and 'component 1', representing the two PCA components.
@@ -73,9 +80,7 @@ def pca(vec, Random_State=123):
     TypeError: If the input is not a numpy ndarray.
     """
     if isinstance(vec, np.ndarray):
-        pca_df = PCA(n_components=2, random_state=Random_State, copy=False).fit_transform(
-            vec,
-        )
+        pca_df = PCA(n_components=2, random_state=random_state).fit_transform(vec)
         pca_df = pd.DataFrame(pca_df, columns=["component 0", "component 1"])
 
         return pca_df
@@ -83,7 +88,7 @@ def pca(vec, Random_State=123):
         raise TypeError("input type is to be have to ndarray")
 
 
-def nmf(vec, Random_State=123):
+def nmf(vec, random_state=123):
     """
     Performs Non-Negative Matrix Factorization (NMF) to reduce the dimensionality of a vector.
 
@@ -92,7 +97,7 @@ def nmf(vec, Random_State=123):
 
     Parameters:
     vec (numpy.ndarray): The input array to perform NMF on.
-    Random_State (int, optional): The random seed for reproducibility. Default is 123.
+    random_state (int, optional): The random seed for reproducibility. Default is 123.
 
     Returns:
     pandas.DataFrame: A DataFrame containing two columns - 'component 0' and 'component 1', representing the two NMF components.
@@ -102,7 +107,7 @@ def nmf(vec, Random_State=123):
     """
     if isinstance(vec, np.ndarray):
         nmf_df = NMF(
-            n_components=2, random_state=Random_State, init="random",
+            n_components=2, random_state=random_state, init="random",
         ).fit_transform(vec)
         nmf_df = pd.DataFrame(nmf_df, columns=["component 0", "component 1"])
 
@@ -111,7 +116,7 @@ def nmf(vec, Random_State=123):
         raise TypeError("input type is to be have to ndarray")
 
 
-def t_sne(vec, learn_Rate=100):
+def t_sne(vec, learning_rate=100):
     """
     Performs t-Distributed Stochastic Neighbor Embedding (t-SNE) to visualize high-dimensional data.
 
@@ -119,7 +124,7 @@ def t_sne(vec, learn_Rate=100):
 
     Parameters:
     vec (numpy.ndarray): The input array to perform t-SNE on.
-    learn_Rate (int, optional): The learning rate for the t-SNE algorithm. Default is 100.
+    learning_rate (int, optional): The learning rate for the t-SNE algorithm. Default is 100.
 
     Returns:
     pandas.DataFrame: A DataFrame containing two columns - 'component 0' and 'component 1', representing the two t-SNE components.
@@ -128,7 +133,9 @@ def t_sne(vec, learn_Rate=100):
     TypeError: If the input is not a numpy ndarray.
     """
     if isinstance(vec, np.ndarray):
-        tsne = TSNE(n_components=2, learning_rate=learn_Rate).fit_transform(vec)
+        tsne = TSNE(
+            n_components=2, learning_rate=learning_rate, init="random",
+        ).fit_transform(vec)
         tsne_df = pd.DataFrame(tsne, columns=["component 0", "component 1"])
     else:
         raise TypeError("input type is to be have to ndarray")
@@ -228,11 +235,12 @@ def meanshift(vec, qt=0.25):
     """
     if isinstance(vec, np.ndarray):
         best_bandwidth = estimate_bandwidth(vec, quantile=qt)
-        print(f'{qt}기준 최적 bandwidth 값:', round(best_bandwidth, 2))
+        logger.info("best bandwidth for quantile %s: %s", qt, round(best_bandwidth, 2))
 
         ms_model = MeanShift(bandwidth=best_bandwidth)
-        print('cluster 갯수:', np.unique(ms_model.fit_predict(vec)))
-        return ms_model.fit_predict(vec)
+        labels = ms_model.fit_predict(vec)
+        logger.info("number of clusters: %d", len(np.unique(labels)))
+        return labels
     else:
         raise TypeError("input type is to be have to ndarray")
 
@@ -262,8 +270,8 @@ def lda(dataframe, k=10, train=100, fit=10):
         for words in lis:
             model.add_doc(words)
 
-        for i in range(0, train, fit):
-            model.train(i)
+        for _ in range(0, train, fit):
+            model.train(fit)
 
         return model
     else:
@@ -289,7 +297,11 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
 
     Raises:
     TypeError: If the input is not a pandas DataFrame.
+    ValueError: If no frequent itemsets meet ``min_support``.
     """
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("input type is to be have to DataFrame")
+
     words = keyword_parser(keyword_list(dataframe))
     te = TransactionEncoder()
     te_data = te.fit(words).transform(words, sparse=True)
@@ -301,5 +313,9 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
     )
 
     result = apriori(te_df, min_support=min_support, use_colnames=use_colnames)
+    if result.empty:
+        raise ValueError(
+            "No frequent itemsets found; try lowering min_support.",
+        )
 
     return association_rules(result, metric=metric, min_threshold=min_threshold)

@@ -1,6 +1,6 @@
-.PHONY: init install uninstall wheel release format test clear
+.PHONY: init install uninstall wheel release lint format test clear
 
-NAME = BigKindsParser
+NAME = pyBigKinds
 
 SHELL := bash
 python = python3
@@ -13,7 +13,7 @@ endif
 ifndef production
 	install_extension = pip install $(pip_user_option) -e .
 else
-	install_extension = $(python) setup.py bdist_wheel && \
+	install_extension = $(python) -m build --wheel && \
 	pip install $(pip_user_option) --find-links "dist/" $(NAME)
 endif
 
@@ -30,10 +30,10 @@ uninstall:
 	pip uninstall --yes $(NAME)
 
 wheel:
-	$(python) setup.py bdist_wheel
+	$(python) -m build
 
 lint:
-	$(python) -m isort --settings-file=setup.cfg pyBigKinds/ test/
+	$(python) -m isort pyBigKinds/ test/
 
 format:
 	$(python) -m flake8 --config=setup.cfg pyBigKinds/
