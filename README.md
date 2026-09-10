@@ -4,7 +4,10 @@ pyBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출�
 
 ## Requirements
 
-- Python >= 3.8
+- Python >= 3.10
+- 한글 폰트: Windows(맑은 고딕)와 macOS(AppleGothic)는 기본 폰트를 사용합니다.
+  Linux에서는 `NanumGothic`(예: `sudo apt-get install fonts-nanum`) 등 한글 폰트를
+  설치해야 워드클라우드와 그래프의 한글이 정상 출력됩니다.
 
 ## Installation
 
