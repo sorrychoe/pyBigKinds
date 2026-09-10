@@ -1,4 +1,5 @@
 # pylint: disable=W0612, C0301
+import logging
 import platform
 
 import matplotlib.font_manager as fm
@@ -14,6 +15,8 @@ from .base import (
     word_counter,
 )
 
+logger = logging.getLogger(__name__)
+
 
 def _resolve_korean_font():
     """
@@ -24,7 +27,7 @@ def _resolve_korean_font():
     ``font.family`` rcParam and ``font_path`` is passed to WordCloud. When no
     Korean font is available, matplotlib's default family is returned together
     with ``None`` (WordCloud then falls back to its bundled font, which cannot
-    render Hangul) and a warning is printed.
+    render Hangul) and a warning is logged.
     """
     system = platform.system()
     if system == "Windows":
@@ -45,9 +48,10 @@ def _resolve_korean_font():
             except ValueError:
                 continue
 
-    print(
-        f"[pyBigKinds] No Korean font found for '{system}'. "
+    logger.warning(
+        "No Korean font found for '%s'. "
         "Hangul may not render correctly; install e.g. 'NanumGothic'.",
+        system,
     )
     default_family = plt.rcParams["font.family"]
     return (default_family[0] if isinstance(default_family, list) else default_family), None

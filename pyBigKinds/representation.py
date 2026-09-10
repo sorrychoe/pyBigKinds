@@ -1,5 +1,7 @@
 # pylint: disable=E1101, C0301
 
+import logging
+
 import numpy as np
 import pandas as pd
 import tomotopy as tp
@@ -11,12 +13,14 @@ from sklearn.manifold import TSNE
 
 from .base import keyword_list, keyword_parser
 
+logger = logging.getLogger(__name__)
+
 
 def day_range(df):
     """
-    Prints the first and last date in the '일자' (date) column of a DataFrame.
+    Logs the first and last date in the '일자' (date) column of a DataFrame.
 
-    This function prints the minimum and maximum values from the '일자' column to display the range of dates in the dataset.
+    This function logs the minimum and maximum values from the '일자' column to display the range of dates in the dataset.
 
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing a '일자' column with date values.
@@ -25,7 +29,7 @@ def day_range(df):
     TypeError: If the input is not a pandas DataFrame.
     """
     if isinstance(df, pd.DataFrame):
-        print("first day: ", df["일자"].min(), "\n", "last day: ", df["일자"].max())
+        logger.info("first day: %s, last day: %s", df["일자"].min(), df["일자"].max())
     else:
         raise TypeError("input type is to be have to DataFrame")
 
@@ -231,11 +235,11 @@ def meanshift(vec, qt=0.25):
     """
     if isinstance(vec, np.ndarray):
         best_bandwidth = estimate_bandwidth(vec, quantile=qt)
-        print(f'{qt}기준 최적 bandwidth 값:', round(best_bandwidth, 2))
+        logger.info("best bandwidth for quantile %s: %s", qt, round(best_bandwidth, 2))
 
         ms_model = MeanShift(bandwidth=best_bandwidth)
         labels = ms_model.fit_predict(vec)
-        print('cluster 갯수:', len(np.unique(labels)))
+        logger.info("number of clusters: %d", len(np.unique(labels)))
         return labels
     else:
         raise TypeError("input type is to be have to ndarray")
