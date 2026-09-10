@@ -17,9 +17,9 @@ def header_remover(df):
     TypeError: If the input is not a pandas DataFrame or list.
     """
     if isinstance(df, pd.DataFrame):
-        ans = df["제목"].str.replace(r"\[[^\]]*\]", "", regex=True)
+        ans = df["제목"].str.replace(r"\[[^\]]*\]", "", regex=True).str.strip()
     elif isinstance(df, list):
-        ans = pd.Series(df).str.replace(r"\[[^\]]*\]", "", regex=True).tolist()
+        ans = pd.Series(df).str.replace(r"\[[^\]]*\]", "", regex=True).str.strip().tolist()
     else:
         raise TypeError("input value is to be have to list or DataFrame")
     return ans
@@ -93,7 +93,7 @@ def duplication_remover(news_key):
         news_value = []
         for j in news_key:
             if isinstance(j, list):
-                j = list(set(j))
+                j = list(dict.fromkeys(j))
                 news_value.append(j)
             else:
                 raise ValueError("input list is not valid format")

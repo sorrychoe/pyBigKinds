@@ -15,7 +15,7 @@ def dataframe():
 
 def test_header_remover(dataframe):
     ans = header_remover(dataframe)
-    assert ans[0] == " 한반도 긴장 높인 북한의 군사정찰위성 발사 규탄한다"
+    assert ans[0] == "한반도 긴장 높인 북한의 군사정찰위성 발사 규탄한다"
 
 
 def test_keyword_list(dataframe):
