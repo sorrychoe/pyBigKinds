@@ -33,8 +33,29 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -e ".[dev]"
+        python -m pip install -e ".[dev,ml,app]"
     - name: Test with pytest
+      env:
+        MPLBACKEND: Agg
       run: python -W ignore::FutureWarning -m pytest -v -s
     - name: Build sdist and wheel
       run: python -m build
+
+  core-only:
+    # the base install must import without the optional [ml]/[app] extras
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install without extras
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install .
+    - name: Import check
+      env:
+        MPLBACKEND: Agg
+      run: |
+        python -c "import pyBigKinds as bk; print(bk.__version__)"
+        python -c "import importlib.util as u; assert not u.find_spec('tomotopy') and not u.find_spec('streamlit')"

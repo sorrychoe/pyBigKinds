@@ -18,6 +18,14 @@ from .base import (
 logger = logging.getLogger(__name__)
 
 
+def _finish(fig, show):
+    """Shows the figure (v1 behavior) or returns it for embedding, e.g. in the GUI."""
+    if show:
+        plt.show()
+        return None
+    return fig
+
+
 def _resolve_korean_font():
     """
     Finds a Korean-capable font installed on the current operating system.
@@ -62,7 +70,7 @@ plt.rcParams["font.family"] = FONT_FAMILY
 plt.rcParams["axes.unicode_minus"] = False
 
 
-def keywords_wordcloud(df, press):
+def keywords_wordcloud(df, press, show=True):
     """
     Generates a WordCloud for keywords based on a specific press company in the DataFrame.
 
@@ -72,12 +80,13 @@ def keywords_wordcloud(df, press):
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing text data, typically with '언론사' and '키워드' columns.
     press (str): The name of the press company to filter the DataFrame by.
+    show (bool, optional): If True (default), display the plot; if False, return the Figure instead.
 
     Raises:
     TypeError: If the input is not a pandas DataFrame.
 
     Returns:
-    None: Displays the WordCloud visualization.
+    None or matplotlib.figure.Figure: None after displaying when show=True; otherwise the Figure. Displays the WordCloud visualization.
     """
     if isinstance(df, pd.DataFrame):
         df_keywords = df[df["언론사"] == press]
@@ -93,14 +102,15 @@ def keywords_wordcloud(df, press):
             background_color="white",
         ).generate_from_frequencies(news_key.set_index("단어").to_dict()["빈도"])
 
-        plt.imshow(wc)
-        plt.axis("off")
-        plt.show()
+        fig, ax = plt.subplots()
+        ax.imshow(wc)
+        ax.axis("off")
+        return _finish(fig, show)
     else:
         raise TypeError("input type is to be have to DataFrame")
 
 
-def top_words(df, press, top_n=25):
+def top_words(df, press, top_n=25, show=True):
     """
     Displays a horizontal bar chart of the top N most frequently used words for a specific press company.
 
@@ -111,12 +121,13 @@ def top_words(df, press, top_n=25):
     df (pandas.DataFrame): The input DataFrame containing text data, typically with '언론사' and '키워드' columns.
     press (str): The name or partial name of the press company to filter the DataFrame by.
     top_n (int, optional): The number of top words to display. Default is 25.
+    show (bool, optional): If True (default), display the plot; if False, return the Figure instead.
 
     Raises:
     TypeError: If the input is not a pandas DataFrame.
 
     Returns:
-    None: Displays a horizontal bar chart.
+    None or matplotlib.figure.Figure: None after displaying when show=True; otherwise the Figure. Displays a horizontal bar chart.
     """
     if isinstance(df, pd.DataFrame):
         df_keywords = df[df["언론사"].str.contains(press, regex=False, na=False)]
@@ -130,14 +141,15 @@ def top_words(df, press, top_n=25):
         # head so the longest bar sits at the top while labels stay aligned
         # with their own counts.
         data = news_key.head(top_n).iloc[::-1]
-        plt.barh(data["단어"], data["빈도"])
-        plt.tight_layout()
-        plt.show()
+        fig, ax = plt.subplots()
+        ax.barh(data["단어"], data["빈도"])
+        fig.tight_layout()
+        return _finish(fig, show)
     else:
         raise TypeError("input type is to be have to DataFrame")
 
 
-def scatterplot(df, label):
+def scatterplot(df, label, show=True):
     """
     Creates a scatter plot for visualizing dimension reduction results with group labels.
 
@@ -146,12 +158,13 @@ def scatterplot(df, label):
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing at least two columns, 'component 0' and 'component 1', representing reduced dimensions.
     label (str): The column name in the DataFrame containing group labels for coloring the scatter plot points.
+    show (bool, optional): If True (default), display the plot; if False, return the Figure instead.
 
     Raises:
     TypeError: If the input is not a pandas DataFrame.
 
     Returns:
-    None: Displays a scatter plot.
+    None or matplotlib.figure.Figure: None after displaying when show=True; otherwise the Figure. Displays a scatter plot.
     """
     if isinstance(df, pd.DataFrame):
         fig, ax = plt.subplots()
@@ -161,6 +174,6 @@ def scatterplot(df, label):
             ax.scatter(points["component 0"], points["component 1"], label=name)
 
         ax.legend()
-        plt.show()
+        return _finish(fig, show)
     else:
         raise TypeError("input type is to be have to DataFrame")

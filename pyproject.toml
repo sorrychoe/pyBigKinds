@@ -10,18 +10,25 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Sorrychoe" }]
-keywords = ["Journalism", "Preprocessing-data", "Text-mining", "BigKinds"]
+keywords = ["Journalism", "Preprocessing-data", "Text-mining", "BigKinds", "No-code"]
 dependencies = [
     "matplotlib>=3.5.3",
     "pandas>=2,<3",
     "wordcloud>=1.8.2.2",
     "scikit-learn>=1.0.0,<2",
-    "tomotopy>=0.14.0",
     "openpyxl>=3.1.2",
-    "mlxtend>=0.22.0,<0.24",
 ]
 
+[project.scripts]
+pybigkinds = "pyBigKinds.__main__:main"
+
 [project.optional-dependencies]
+ml = [
+    "tomotopy>=0.14.0",
+    "mlxtend>=0.22.0,<0.24",
+]
+app = ["streamlit>=1.30"]
+all = ["pyBigKinds[ml,app]"]
 dev = [
     "build>=0.7",
     "flake8>=3.9",
