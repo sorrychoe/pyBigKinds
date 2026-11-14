@@ -93,3 +93,16 @@ def test_association(dataframe):
     assert not apriopri.empty
     for col in ("antecedents", "consequents", "support", "confidence", "lift"):
         assert col in apriopri.columns
+
+
+def test_day_range_returns_bounds(dataframe):
+    assert day_range(dataframe) == (dataframe["일자"].min(), dataframe["일자"].max())
+
+
+@pytest.mark.parametrize("func,module", [(lda, "tomotopy"), (association, "mlxtend.frequent_patterns")])
+def test_ml_extra_missing(dataframe, monkeypatch, func, module):
+    import sys
+
+    monkeypatch.setitem(sys.modules, module, None)  # makes the import raise ImportError
+    with pytest.raises(ImportError, match=r"pyBigKinds\[ml\]"):
+        func(dataframe)

@@ -4,9 +4,6 @@ import logging
 
 import numpy as np
 import pandas as pd
-import tomotopy as tp
-from mlxtend.frequent_patterns import apriori, association_rules
-from mlxtend.preprocessing import TransactionEncoder
 from sklearn.cluster import DBSCAN, KMeans, MeanShift, estimate_bandwidth
 from sklearn.decomposition import NMF, PCA, TruncatedSVD
 from sklearn.manifold import TSNE
@@ -14,6 +11,8 @@ from sklearn.manifold import TSNE
 from .base import keyword_list, keyword_parser
 
 logger = logging.getLogger(__name__)
+
+_ML_HINT = "{}() requires the 'ml' extra: pip install 'pyBigKinds[ml]'"
 
 
 def day_range(df):
@@ -25,11 +24,16 @@ def day_range(df):
     Parameters:
     df (pandas.DataFrame): The input DataFrame containing a '일자' column with date values.
 
+    Returns:
+    tuple: (first day, last day).
+
     Raises:
     TypeError: If the input is not a pandas DataFrame.
     """
     if isinstance(df, pd.DataFrame):
-        logger.info("first day: %s, last day: %s", df["일자"].min(), df["일자"].max())
+        first, last = df["일자"].min(), df["일자"].max()
+        logger.info("first day: %s, last day: %s", first, last)
+        return first, last
     else:
         raise TypeError("input type is to be have to DataFrame")
 
@@ -263,6 +267,11 @@ def lda(dataframe, k=10, train=100, fit=10):
     Raises:
     TypeError: If the input is not a pandas DataFrame.
     """
+    try:
+        import tomotopy as tp  # pylint: disable=C0415
+    except ImportError as e:
+        raise ImportError(_ML_HINT.format("lda")) from e
+
     if isinstance(dataframe, pd.DataFrame):
         lis = keyword_parser(keyword_list(dataframe))
         model = tp.LDAModel(k=k)
@@ -299,6 +308,13 @@ def association(dataframe, min_support=0.5, use_colnames=True, min_threshold=0.1
     TypeError: If the input is not a pandas DataFrame.
     ValueError: If no frequent itemsets meet ``min_support``.
     """
+    try:
+        # pylint: disable=C0415
+        from mlxtend.frequent_patterns import apriori, association_rules
+        from mlxtend.preprocessing import TransactionEncoder
+    except ImportError as e:
+        raise ImportError(_ML_HINT.format("association")) from e
+
     if not isinstance(dataframe, pd.DataFrame):
         raise TypeError("input type is to be have to DataFrame")
 
