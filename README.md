@@ -16,7 +16,6 @@ pyBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출�
   ```bash
   python3 -m pip install pyBigKinds
   ```
-
 - Windows, linux
 
   ```bash
@@ -38,12 +37,12 @@ pybigkinds app
 
 ## Extras
 
-| 설치 | 포함 |
-|---|---|
-| `pip install pyBigKinds` | 전처리·빈도·TF-IDF·군집·차원축소·시각화 |
-| `pip install "pyBigKinds[ml]"` | + `lda`, `association` (tomotopy, mlxtend) |
-| `pip install "pyBigKinds[app]"` | + No-Code 웹 앱 (streamlit) |
-| `pip install "pyBigKinds[all]"` | 전부 |
+| 설치                              | 포함                                           |
+| --------------------------------- | ---------------------------------------------- |
+| `pip install pyBigKinds`        | 전처리·빈도·TF-IDF·군집·차원축소·시각화   |
+| `pip install "pyBigKinds[ml]"`  | + `lda`, `association` (tomotopy, mlxtend) |
+| `pip install "pyBigKinds[app]"` | + No-Code 웹 앱 (streamlit)                    |
+| `pip install "pyBigKinds[all]"` | 전부                                           |
 
 > **v2.0 변경:** `lda()`·`association()`을 쓰려면 `[ml]` extra를 설치해야 합니다. 그 외 v1 코드는 수정 없이 동작합니다.
 
@@ -75,7 +74,6 @@ fig.savefig("top_words.png")
 ```
 
 ![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example2.png)
-
 
 ## License
 
