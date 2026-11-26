@@ -1,28 +1,65 @@
 name: build test & upload pypi
 
+# Publish only when a PR that bumps the version is merged into release.
+# Merges without a version change, PRs closed without merging, and direct pushes do not publish.
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: ["release"]
+    paths: ["pyBigKinds/_version.py"]
 
 permissions:
   contents: read
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        # the commit that actually landed on release (merge, squash or rebase)
+        ref: ${{ github.event.pull_request.merge_commit_sha }}
+        fetch-depth: 0
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
     - name: Install build tooling
-      run: python -m pip install --upgrade pip build twine
+      run: python -m pip install --upgrade pip build twine packaging
+    - name: Check version bump
+      id: bump
+      env:
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: |
+        python - <<'EOF'
+        import os
+        import re
+        import subprocess
+
+        from packaging.version import Version
+
+        def version(src):
+            return Version(re.search(r'__version__\s*=\s*"([^"]+)"', src).group(1))
+
+        path = "pyBigKinds/_version.py"
+        old = version(subprocess.check_output(["git", "show", f"{os.environ['BASE_SHA']}:{path}"], text=True))
+        new = version(open(path, encoding="utf-8").read())
+        bumped = new > old
+        print(f"version {old} -> {new}: {'publish' if bumped else 'skip (not a bump)'}")
+        if not bumped:
+            print(f"::notice::{path} changed but version did not increase ({old} -> {new}); skipping publish")
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+            f.write(f"bumped={str(bumped).lower()}\n")
+        EOF
     - name: Build sdist and wheel
+      if: steps.bump.outputs.bumped == 'true'
       run: python -m build
     - name: Check artifacts
+      if: steps.bump.outputs.bumped == 'true'
       run: python -m twine check dist/*
     - name: Publish to PyPI
+      if: steps.bump.outputs.bumped == 'true'
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}

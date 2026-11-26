@@ -59,9 +59,14 @@ df = bk.read_bigkinds(["2023_01-06.xlsx", "2023_07-12.xlsx"])
 import pyBigKinds as bk
 
 bk.press_counter(df)
-```
+#   언론사	기사
+# 0	경향신문	938
+# 1	중앙일보	922
+# 2	한겨레	659
+# 3	동아일보	614
+# 4	조선일보	611
 
-![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example1.png)
+```
 
 ```python
 import pyBigKinds as bk
@@ -73,7 +78,7 @@ fig = bk.top_words(df, "중앙일보", show=False)
 fig.savefig("top_words.png")
 ```
 
-![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example2.png)
+![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/top_words.png)
 
 ## License
 
