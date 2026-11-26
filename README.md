@@ -65,13 +65,10 @@ bk.press_counter(df)
 # 2	한겨레	659
 # 3	동아일보	614
 # 4	조선일보	611
-
 ```
 
 ```python
 import pyBigKinds as bk
-
-bk.keywords_wordcloud(df, "중앙일보")
 
 # show=False이면 그림을 띄우지 않고 matplotlib Figure를 반환합니다
 fig = bk.top_words(df, "중앙일보", show=False)
