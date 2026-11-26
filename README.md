@@ -16,7 +16,6 @@ pyBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출�
   ```bash
   python3 -m pip install pyBigKinds
   ```
-
 - Windows, linux
 
   ```bash
@@ -38,12 +37,12 @@ pybigkinds app
 
 ## Extras
 
-| 설치 | 포함 |
-|---|---|
-| `pip install pyBigKinds` | 전처리·빈도·TF-IDF·군집·차원축소·시각화 |
-| `pip install "pyBigKinds[ml]"` | + `lda`, `association` (tomotopy, mlxtend) |
-| `pip install "pyBigKinds[app]"` | + No-Code 웹 앱 (streamlit) |
-| `pip install "pyBigKinds[all]"` | 전부 |
+| 설치                              | 포함                                           |
+| --------------------------------- | ---------------------------------------------- |
+| `pip install pyBigKinds`        | 전처리·빈도·TF-IDF·군집·차원축소·시각화   |
+| `pip install "pyBigKinds[ml]"`  | + `lda`, `association` (tomotopy, mlxtend) |
+| `pip install "pyBigKinds[app]"` | + No-Code 웹 앱 (streamlit)                    |
+| `pip install "pyBigKinds[all]"` | 전부                                           |
 
 > **v2.0 변경:** `lda()`·`association()`을 쓰려면 `[ml]` extra를 설치해야 합니다. 그 외 v1 코드는 수정 없이 동작합니다.
 
@@ -60,9 +59,14 @@ df = bk.read_bigkinds(["2023_01-06.xlsx", "2023_07-12.xlsx"])
 import pyBigKinds as bk
 
 bk.press_counter(df)
-```
+#   언론사	기사
+# 0	경향신문	938
+# 1	중앙일보	922
+# 2	한겨레	659
+# 3	동아일보	614
+# 4	조선일보	611
 
-![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example1.png)
+```
 
 ```python
 import pyBigKinds as bk
@@ -74,8 +78,7 @@ fig = bk.top_words(df, "중앙일보", show=False)
 fig.savefig("top_words.png")
 ```
 
-![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/example2.png)
-
+![](https://github.com/sorrychoe/pyBigKinds/blob/release/docs/top_words.png)
 
 ## License
 
